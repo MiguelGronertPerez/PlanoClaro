@@ -35,10 +35,16 @@ PC.util = {
 };
 /* h('p', {class:'x'}, 'texto', otroNodo): crea elementos. Los strings se insertan como nodos de texto. */
 PC.h = function h(tag, attrs, ...hijos) {
-  const el = document.createElement(tag);
+  const esSvg = /^(svg|path|circle|rect|line|g|polygon|polyline|use|text)$/i.test(tag);
+  const el = esSvg
+    ? document.createElementNS('http://www.w3.org/2000/svg', tag)
+    : document.createElement(tag);
   if (attrs) for (const [k, v] of Object.entries(attrs)) {
     if (v == null || v === false) continue;
-    if (k === 'class') el.className = v;
+    if (k === 'class') {
+      if (esSvg) el.setAttribute('class', v);
+      else el.className = v;
+    }
     else if (k === 'dataset') Object.assign(el.dataset, v);
     else if (/^on/i.test(k)) throw new Error('Usa addEventListener, no atributos on*');
     else el.setAttribute(k, v === true ? '' : String(v));

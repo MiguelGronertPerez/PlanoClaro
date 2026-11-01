@@ -531,9 +531,10 @@ html{overflow-x:clip}
 
 /* ---------- Autenticación y Cuenta (Google + Sesiones) ---------- */
 .login__panel{max-width:520px;margin-left:auto;margin-right:auto}
-.boton--google{width:100%;min-height:52px;background:var(--blanco);color:var(--tinta);border:1.5px solid var(--linea-fuerte);border-radius:var(--radio-chico);font:inherit;font-size:1.05rem;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:.75rem;cursor:pointer;box-shadow:var(--sombra-1);transition:background-color var(--d-ui) var(--ease-out),transform var(--d-press) var(--ease-out),border-color var(--d-ui) var(--ease-out)}
-.boton--google:active{transform:scale(.97)}
-@media (hover:hover) and (pointer:fine){.boton--google:hover{background:rgba(255,255,255,.95);border-color:var(--tinta)}}
+.boton--google{width:100%;min-height:52px;background:#ffffff;color:#1f1f1f;border:1.5px solid #dadce0;border-radius:28px;font:inherit;font-size:1.02rem;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:.75rem;cursor:pointer;box-shadow:0 1px 3px rgba(60,64,67,.1),0 1px 2px rgba(60,64,67,.15);transition:background-color var(--d-ui) var(--ease-out),transform var(--d-press) var(--ease-out),box-shadow var(--d-ui) var(--ease-out)}
+.boton--google:active{transform:scale(.98)}
+@media (hover:hover) and (pointer:fine){.boton--google:hover{background:#f8f9fa;box-shadow:0 1px 4px rgba(60,64,67,.2),0 3px 8px rgba(60,64,67,.15)}}
+.boton--google .ico--google{width:22px;height:22px;flex-shrink:0}
 .ico--google{width:1.3em;height:1.3em;flex:none}
 .login__sep{position:relative;text-align:center;margin:1.4rem 0;color:var(--tinta-3);font-size:.92rem}
 .login__sep::before{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:var(--linea);z-index:0}
