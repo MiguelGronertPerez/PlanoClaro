@@ -1,0 +1,1514 @@
+// Generado por scripts/generar_datos.py. Permite abrir index.html sin servidor (file://).
+window.PLANOCLARO_DATA = {
+ "version": "avance-2",
+ "fechaConsulta": "2026-10-20",
+ "moneda": "PEN",
+ "nota": "Precios con IGV. Datos recogidos el 2026-10-20; las promociones cambian cada mes. 'oficial' = visto en la web del operador; 'secundaria' = comparador (Selectra) que cita la web del operador u OSIPTEL; 'no_verificado' / 'en_conflicto' = no se pudo confirmar.",
+ "planes": [
+  {
+   "id": "claro-max-2990",
+   "tipo": "movil",
+   "operador": "Claro",
+   "nombre": "Max 29.90",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 29.9,
+   "gbAltaVelocidad": 20,
+   "datosIlimitados": false,
+   "internacional": "roaming",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Redes sociales ilimitadas (según web Claro)",
+    "Roaming en 17 países de América (30 min, 180 MB)"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "La página Full Claro indica 20 GB; otra página de Claro y un comparador mencionan 10 GB o 25 GB. Confirma los GB antes de contratar.",
+   "fuentes": [
+    "https://www.claro.com.pe/personas/beneficios/full-claro/",
+    "https://www.claro.com.pe/personas/movil/postpago/",
+    "https://www.claro.com.pe/personas/beneficios/movil/cobertura-internacional/"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "en_conflicto",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "claro-max-3990",
+   "tipo": "movil",
+   "operador": "Claro",
+   "nombre": "Max 39.90",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 39.9,
+   "gbAltaVelocidad": 30,
+   "datosIlimitados": false,
+   "internacional": "roaming",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Roaming 17 países (125 min, 1.3 GB)"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://www.claro.com.pe/personas/beneficios/full-claro/",
+    "https://www.claro.com.pe/personas/beneficios/movil/cobertura-internacional/"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "claro-max-4990",
+   "tipo": "movil",
+   "operador": "Claro",
+   "nombre": "Max 49.90",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 49.9,
+   "gbAltaVelocidad": 45,
+   "datosIlimitados": false,
+   "internacional": "roaming",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Roaming 17 países (200 min, 2.5 GB)"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://www.claro.com.pe/personas/beneficios/full-claro/",
+    "https://www.claro.com.pe/personas/beneficios/movil/cobertura-internacional/"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "claro-max-6090",
+   "tipo": "movil",
+   "operador": "Claro",
+   "nombre": "Max 60.90",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 60.9,
+   "gbAltaVelocidad": 75,
+   "datosIlimitados": false,
+   "internacional": "roaming",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Roaming 17 países (300 min, 3 GB)"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://www.claro.com.pe/personas/beneficios/full-claro/",
+    "https://www.claro.com.pe/personas/beneficios/movil/cobertura-internacional/"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "claro-maxilim-6990",
+   "tipo": "movil",
+   "operador": "Claro",
+   "nombre": "Max Ilimitado 69.90",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 69.9,
+   "gbAltaVelocidad": 110,
+   "datosIlimitados": true,
+   "internacional": "roaming",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Llamadas y SMS ilimitados",
+    "Roaming América + EE.UU. + Canadá (350 min, 3.5 GB)",
+    "WhatsApp ilimitado en el extranjero"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "Tras 110 GB en alta velocidad sigues navegando a velocidad reducida (Claro no publica la velocidad en las páginas consultadas). Uso personal: no permite reventa, P2P ni proxys.",
+   "fuentes": [
+    "https://www.claro.com.pe/personas/beneficios/full-claro/",
+    "https://www.claro.com.pe/personas/beneficios/movil/cobertura-internacional/",
+    "https://www.claro.com.pe/personas/movil/postpago/"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "claro-maxilim-7990",
+   "tipo": "movil",
+   "operador": "Claro",
+   "nombre": "Max Ilimitado 79.90",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 79.9,
+   "gbAltaVelocidad": 125,
+   "datosIlimitados": true,
+   "internacional": "roaming",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Roaming América + EE.UU. + Canadá (350 min, 4 GB)"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://www.claro.com.pe/personas/beneficios/full-claro/",
+    "https://www.claro.com.pe/personas/beneficios/movil/cobertura-internacional/"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "mov-max-20",
+   "tipo": "movil",
+   "operador": "Movistar",
+   "nombre": "Plan Máximo 20 GB",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 29.9,
+   "gbAltaVelocidad": 20,
+   "datosIlimitados": false,
+   "internacional": "si",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Llamadas ilimitadas en Perú, 500 SMS",
+    "Apps ilimitadas por 12 meses",
+    "100 MB en América y Europa por 12 meses"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://tienda.movistar.com.pe/planes-pospago-movistar",
+    "https://selectra.com.pe/celular/postpago/movistar"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "mov-max-125",
+   "tipo": "movil",
+   "operador": "Movistar",
+   "nombre": "Plan Máximo 125 GB",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 39.9,
+   "gbAltaVelocidad": 125,
+   "datosIlimitados": false,
+   "internacional": "no_verificado",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Llamadas ilimitadas en Perú",
+    "225 GB los primeros 6 meses (bono)"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "Otras páginas de Movistar aún muestran 25 GB por S/ 39.90 (campaña anterior).",
+   "fuentes": [
+    "https://selectra.com.pe/celular/postpago/movistar"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "datos": "secundaria",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "mov-max-250",
+   "tipo": "movil",
+   "operador": "Movistar",
+   "nombre": "Plan Máximo 250 GB",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 49.9,
+   "gbAltaVelocidad": 250,
+   "datosIlimitados": false,
+   "internacional": "no_verificado",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "L1 Max por tiempo limitado",
+    "Movistar TV App"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://selectra.com.pe/celular/postpago/movistar"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "datos": "secundaria",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "mov-max-500",
+   "tipo": "movil",
+   "operador": "Movistar",
+   "nombre": "Plan Máximo 500 GB",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 59.9,
+   "gbAltaVelocidad": 500,
+   "datosIlimitados": false,
+   "internacional": "no_verificado",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Llamadas ilimitadas en Perú"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://selectra.com.pe/celular/postpago/movistar"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "datos": "secundaria",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "mov-max-ilim",
+   "tipo": "movil",
+   "operador": "Movistar",
+   "nombre": "Plan Máximo Ilimitado",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 79.9,
+   "gbAltaVelocidad": null,
+   "datosIlimitados": true,
+   "internacional": "si",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Internet y llamadas ilimitadas",
+    "4 GB en América y Europa por 12 meses",
+    "Llamadas a EE.UU. y Canadá (según tienda)"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "La tienda muestra '999 GB'. Revisa la política de uso justo.",
+   "fuentes": [
+    "https://tienda.movistar.com.pe/planes-pospago-movistar",
+    "https://selectra.com.pe/celular/postpago/movistar"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "entel-power-2990",
+   "tipo": "movil",
+   "operador": "Entel",
+   "nombre": "Power 29.90",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 29.9,
+   "gbAltaVelocidad": 20,
+   "datosIlimitados": false,
+   "internacional": "no_verificado",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Llamadas ilimitadas",
+    "50 GB los primeros 6 meses si portas tu número"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://www.entel.pe/planes/postpago",
+    "https://selectra.com.pe/celular/postpago/entel"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "entel-power-4990",
+   "tipo": "movil",
+   "operador": "Entel",
+   "nombre": "Power 49.90",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 49.9,
+   "gbAltaVelocidad": 80,
+   "datosIlimitados": false,
+   "internacional": "no_verificado",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Llamadas ilimitadas",
+    "110 GB los primeros 6 meses"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://www.entel.pe/planes/postpago",
+    "https://selectra.com.pe/celular/postpago/entel"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "entel-power-5990",
+   "tipo": "movil",
+   "operador": "Entel",
+   "nombre": "Power 59.90",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 59.9,
+   "gbAltaVelocidad": 120,
+   "datosIlimitados": false,
+   "internacional": "no_verificado",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Llamadas ilimitadas"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://www.entel.pe/planes/postpago",
+    "https://selectra.com.pe/celular/postpago/entel"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "entel-ilim-6990",
+   "tipo": "movil",
+   "operador": "Entel",
+   "nombre": "Power Ilim 69.90",
+   "precioPromo": 34.95,
+   "mesesPromo": 6,
+   "precioRegular": 69.9,
+   "gbAltaVelocidad": 200,
+   "datosIlimitados": true,
+   "internacional": "no_verificado",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Llamadas ilimitadas"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "50% de descuento por 6 meses solo con portabilidad",
+   "notas": "",
+   "fuentes": [
+    "https://www.entel.pe/planes/postpago",
+    "https://selectra.com.pe/celular/postpago/entel"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "entel-ilim-7990",
+   "tipo": "movil",
+   "operador": "Entel",
+   "nombre": "Power Ilim 79.90 SD",
+   "precioPromo": 39.95,
+   "mesesPromo": 6,
+   "precioRegular": 79.9,
+   "gbAltaVelocidad": null,
+   "datosIlimitados": true,
+   "internacional": "no_verificado",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Datos, llamadas y SMS ilimitados"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "50% de descuento por 6 meses solo con portabilidad",
+   "notas": "",
+   "fuentes": [
+    "https://www.entel.pe/planes/postpago",
+    "https://selectra.com.pe/celular/postpago/entel"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "entel-ilim-9990",
+   "tipo": "movil",
+   "operador": "Entel",
+   "nombre": "Power Ilim 99.90 SD",
+   "precioPromo": 49.95,
+   "mesesPromo": 6,
+   "precioRegular": 99.9,
+   "gbAltaVelocidad": null,
+   "datosIlimitados": true,
+   "internacional": "roaming",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Todo ilimitado",
+    "Roaming y datos satelitales (Direct to Cell)"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "50% de descuento por 6 meses solo con portabilidad",
+   "notas": "",
+   "fuentes": [
+    "https://www.entel.pe/planes/postpago",
+    "https://selectra.com.pe/celular/postpago/entel"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "bitel-ilim-3990",
+   "tipo": "movil",
+   "operador": "Bitel",
+   "nombre": "Ilimitado 39.90",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 39.9,
+   "gbAltaVelocidad": 30,
+   "datosIlimitados": false,
+   "internacional": "no_verificado",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Datos 5G ilimitados por 6 meses",
+    "80 GB si portas (regular 30 GB)",
+    "Facebook, Instagram y WhatsApp en baja velocidad"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "Un comparador indica 45 GB regulares; la web oficial dice 30 GB.",
+   "fuentes": [
+    "https://bitel.com.pe/planes/control/ilimitado"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "bitel-ilim-4990",
+   "tipo": "movil",
+   "operador": "Bitel",
+   "nombre": "Ilimitado 49.90",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 49.9,
+   "gbAltaVelocidad": 45,
+   "datosIlimitados": false,
+   "internacional": "no_verificado",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Datos 5G ilimitados por 12 meses",
+    "Bono TikTok 30 GB x 6 meses"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "",
+   "notas": "Otra página de Bitel muestra 120 GB para un plan 49.90 5G. Confirma antes de contratar.",
+   "fuentes": [
+    "https://bitel.com.pe/planes/control/ilimitado"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "en_conflicto",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "bitel-ilim-5590",
+   "tipo": "movil",
+   "operador": "Bitel",
+   "nombre": "Ilimitado 55.90",
+   "precioPromo": 27.9,
+   "mesesPromo": 12,
+   "precioRegular": 55.9,
+   "gbAltaVelocidad": 75,
+   "datosIlimitados": false,
+   "internacional": "no_verificado",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Bono TikTok y Spotify por 6 meses"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "50% dscto. solo por portabilidad",
+   "notas": "La web oficial dice 12 meses de descuento; otra página de Bitel y un comparador indican 6 meses o 30%.",
+   "fuentes": [
+    "https://bitel.com.pe/planes/control/ilimitado",
+    "https://selectra.com.pe/celular/postpago/bitel"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "en_conflicto",
+    "datos": "en_conflicto",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "bitel-ilim-6990",
+   "tipo": "movil",
+   "operador": "Bitel",
+   "nombre": "Ilimitado 69.90",
+   "precioPromo": 34.9,
+   "mesesPromo": 12,
+   "precioRegular": 69.9,
+   "gbAltaVelocidad": 110,
+   "datosIlimitados": false,
+   "internacional": "no_verificado",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Facebook e Instagram ilimitado en baja velocidad"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "50% dscto. solo por portabilidad",
+   "notas": "",
+   "fuentes": [
+    "https://bitel.com.pe/planes/control/ilimitado"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "bitel-ilim-7990",
+   "tipo": "movil",
+   "operador": "Bitel",
+   "nombre": "Ilimitado 79.90",
+   "precioPromo": 39.9,
+   "mesesPromo": 12,
+   "precioRegular": 79.9,
+   "gbAltaVelocidad": 125,
+   "datosIlimitados": true,
+   "internacional": "no_verificado",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Internet, llamadas y SMS ilimitados",
+    "Datos 5G ilimitados por 6 meses"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "50% dscto. solo por portabilidad",
+   "notas": "",
+   "fuentes": [
+    "https://bitel.com.pe/planes/control/ilimitado"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "id": "bitel-ilim-9990",
+   "tipo": "movil",
+   "operador": "Bitel",
+   "nombre": "Ilimitado 99.90",
+   "precioPromo": 49.9,
+   "mesesPromo": 12,
+   "precioRegular": 99.9,
+   "gbAltaVelocidad": 155,
+   "datosIlimitados": true,
+   "internacional": "no_verificado",
+   "compartirDatos": "no_verificado",
+   "extras": [
+    "Datos 5G ilimitados por 12 meses"
+   ],
+   "velocidadTrasConsumo": null,
+   "permanencia": null,
+   "costoEquipo": null,
+   "costoInstalacion": 0,
+   "condicionPromo": "50% dscto. solo por portabilidad",
+   "notas": "",
+   "fuentes": [
+    "https://bitel.com.pe/planes/control/ilimitado"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "datos": "oficial",
+    "velocidadTrasConsumo": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "claro-fibra-200",
+   "tipo": "hogar",
+   "operador": "Claro",
+   "nombre": "Fibra 200 Mb",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 69,
+   "velocidadMbps": 200,
+   "tecnologia": "Fibra óptica",
+   "simetrica": null,
+   "costoInstalacion": null,
+   "costoEquipo": null,
+   "velocidadMinimaGarantizada": "70% (según Claro)",
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "",
+   "notas": "Claro vende el mismo nombre en fibra y cable coaxial; en coaxial la subida es 50 Mbps.",
+   "fuentes": [
+    "https://selectra.com.pe/empresas/claro"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "instalacion": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "claro-fibra-400",
+   "tipo": "hogar",
+   "operador": "Claro",
+   "nombre": "Fibra 400 Mb",
+   "precioPromo": 69,
+   "mesesPromo": 6,
+   "precioRegular": 89,
+   "velocidadMbps": 400,
+   "tecnologia": "Fibra óptica",
+   "simetrica": null,
+   "costoInstalacion": null,
+   "costoEquipo": null,
+   "velocidadMinimaGarantizada": "70% (según Claro)",
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "Precio promocional; sube en el mes 7 según comparador",
+   "notas": "",
+   "fuentes": [
+    "https://selectra.com.pe/empresas/claro"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "instalacion": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "claro-fibra-500",
+   "tipo": "hogar",
+   "operador": "Claro",
+   "nombre": "Fibra 500 Mb",
+   "precioPromo": 79,
+   "mesesPromo": 6,
+   "precioRegular": 110,
+   "velocidadMbps": 500,
+   "tecnologia": "Fibra óptica",
+   "simetrica": null,
+   "costoInstalacion": null,
+   "costoEquipo": null,
+   "velocidadMinimaGarantizada": "70% (según Claro)",
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://selectra.com.pe/empresas/claro"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "instalacion": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "claro-fibra-1000",
+   "tipo": "hogar",
+   "operador": "Claro",
+   "nombre": "Fibra 1000 Mb",
+   "precioPromo": 119,
+   "mesesPromo": 6,
+   "precioRegular": 145,
+   "velocidadMbps": 1000,
+   "tecnologia": "Fibra óptica",
+   "simetrica": null,
+   "costoInstalacion": null,
+   "costoEquipo": null,
+   "velocidadMinimaGarantizada": "70% (según Claro)",
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://selectra.com.pe/empresas/claro"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "instalacion": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "mov-fibra-400",
+   "tipo": "hogar",
+   "operador": "Movistar",
+   "nombre": "Fibra 400 Mbps",
+   "precioPromo": 79.9,
+   "mesesPromo": 2,
+   "precioRegular": 89.9,
+   "velocidadMbps": 400,
+   "tecnologia": "Fibra óptica",
+   "simetrica": true,
+   "costoInstalacion": 0,
+   "costoEquipo": "Módem Smart WiFi incluido",
+   "velocidadMinimaGarantizada": null,
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "Instalación gratis previa evaluación crediticia",
+   "notas": "Incluye Movistar TV App (+20 canales).",
+   "fuentes": [
+    "https://www.movistar.com.pe/hogar/internet-fibra-optica/",
+    "https://selectra.com.pe/empresas/movistar"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "instalacion": "oficial",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "mov-fibra-600",
+   "tipo": "hogar",
+   "operador": "Movistar",
+   "nombre": "Fibra 600 Mbps",
+   "precioPromo": 99.9,
+   "mesesPromo": 2,
+   "precioRegular": 109.9,
+   "velocidadMbps": 600,
+   "tecnologia": "Fibra óptica",
+   "simetrica": true,
+   "costoInstalacion": 0,
+   "costoEquipo": "Módem Smart WiFi incluido",
+   "velocidadMinimaGarantizada": null,
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://www.movistar.com.pe/hogar/internet-fibra-optica/",
+    "https://selectra.com.pe/empresas/movistar"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "instalacion": "oficial",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "mov-fibra-1000",
+   "tipo": "hogar",
+   "operador": "Movistar",
+   "nombre": "Fibra 1000 Mbps",
+   "precioPromo": 139.9,
+   "mesesPromo": 2,
+   "precioRegular": 149.9,
+   "velocidadMbps": 1000,
+   "tecnologia": "Fibra óptica",
+   "simetrica": true,
+   "costoInstalacion": 0,
+   "costoEquipo": "Módem Smart WiFi incluido",
+   "velocidadMinimaGarantizada": null,
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://www.movistar.com.pe/hogar/internet-fibra-optica/",
+    "https://selectra.com.pe/empresas/movistar"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "instalacion": "oficial",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "mov-inal-25",
+   "tipo": "hogar",
+   "operador": "Movistar",
+   "nombre": "Internet Inalámbrico 25 GB",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 39.9,
+   "velocidadMbps": 5,
+   "tecnologia": "Inalámbrico (red móvil)",
+   "simetrica": false,
+   "costoInstalacion": null,
+   "costoEquipo": null,
+   "velocidadMinimaGarantizada": null,
+   "topeGB": 25,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "",
+   "notas": "5 Mbps de bajada; al agotar los GB baja a unos 0.5 Mbps. Solo para uso muy ligero o zonas sin fibra.",
+   "fuentes": [
+    "https://selectra.com.pe/empresas/movistar"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "instalacion": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "entel-fibra-600",
+   "tipo": "hogar",
+   "operador": "Entel",
+   "nombre": "Fibra 600 Mbps",
+   "precioPromo": 69.93,
+   "mesesPromo": 3,
+   "precioRegular": 99.9,
+   "velocidadMbps": 600,
+   "tecnologia": "Fibra óptica",
+   "simetrica": true,
+   "costoInstalacion": 0,
+   "costoEquipo": "Router WiFi 7",
+   "velocidadMinimaGarantizada": "70%",
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "30% de descuento los 3 primeros meses",
+   "notas": "",
+   "fuentes": [
+    "https://www.entel.pe/hogar/internet/planes"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "instalacion": "oficial",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "entel-fibra-1000",
+   "tipo": "hogar",
+   "operador": "Entel",
+   "nombre": "Fibra 1000 Mbps",
+   "precioPromo": 90.93,
+   "mesesPromo": 3,
+   "precioRegular": 129.9,
+   "velocidadMbps": 1000,
+   "tecnologia": "Fibra óptica",
+   "simetrica": true,
+   "costoInstalacion": 0,
+   "costoEquipo": "Router WiFi 7 + hasta 1 repetidor (según evaluación)",
+   "velocidadMinimaGarantizada": "70%",
+   "topeGB": null,
+   "incluyeMesh": true,
+   "permanencia": null,
+   "condicionPromo": "30% de descuento los 3 primeros meses",
+   "notas": "",
+   "fuentes": [
+    "https://www.entel.pe/hogar/internet/planes"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "instalacion": "oficial",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "bitel-fibra-200",
+   "tipo": "hogar",
+   "operador": "Bitel",
+   "nombre": "Fibra 200 Mbps",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 55,
+   "velocidadMbps": 200,
+   "tecnologia": "Fibra óptica",
+   "simetrica": true,
+   "costoInstalacion": 0,
+   "costoEquipo": null,
+   "velocidadMinimaGarantizada": "70%",
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": "6 meses para instalación gratis (no verificado); sin contrato: S/ 120",
+   "condicionPromo": "",
+   "notas": "Precio tomado de resultados de búsqueda; la página oficial no mostró la tabla al consultarla.",
+   "fuentes": [
+    "https://bitel.com.pe/planes/casa/internet-fibra-optica"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "no_verificado",
+    "instalacion": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "bitel-fibra-1000",
+   "tipo": "hogar",
+   "operador": "Bitel",
+   "nombre": "Fibra 1000 Mbps",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 139,
+   "velocidadMbps": 1000,
+   "tecnologia": "Fibra óptica",
+   "simetrica": true,
+   "costoInstalacion": 0,
+   "costoEquipo": null,
+   "velocidadMinimaGarantizada": "70%",
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": "6 meses para instalación gratis (no verificado); sin contrato: S/ 120",
+   "condicionPromo": "",
+   "notas": "Precio tomado de resultados de búsqueda; no verificado en la web oficial.",
+   "fuentes": [
+    "https://bitel.com.pe/planes/casa/internet-fibra-optica"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "no_verificado",
+    "instalacion": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "win-fibra-500",
+   "tipo": "hogar",
+   "operador": "Win",
+   "nombre": "Fibra 500 Mbps",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 99,
+   "velocidadMbps": 500,
+   "tecnologia": "Fibra óptica",
+   "simetrica": true,
+   "costoInstalacion": null,
+   "costoEquipo": "Router ONT en comodato",
+   "velocidadMinimaGarantizada": null,
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "",
+   "notas": "",
+   "fuentes": [
+    "https://selectra.com.pe/empresas/win"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "secundaria",
+    "instalacion": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "win-fibra-750",
+   "tipo": "hogar",
+   "operador": "Win",
+   "nombre": "Fibra 750 Mbps",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 109.9,
+   "velocidadMbps": 750,
+   "tecnologia": "Fibra óptica",
+   "simetrica": true,
+   "costoInstalacion": 120,
+   "costoEquipo": "Router ONT en comodato",
+   "velocidadMinimaGarantizada": null,
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "",
+   "notas": "Instalación S/ 120 (hasta 6 cuotas) según web Win; el PDF de promoción de Lima indica S/ 0.",
+   "fuentes": [
+    "https://win-internet.com.pe/hogar/plan-internet-duo/",
+    "https://win-internet.com.pe/pdf/lima.pdf"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "instalacion": "en_conflicto",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "win-fibra-850",
+   "tipo": "hogar",
+   "operador": "Win",
+   "nombre": "Fibra 850 Mbps",
+   "precioPromo": 59.5,
+   "mesesPromo": 1,
+   "precioRegular": 119.9,
+   "velocidadMbps": 850,
+   "tecnologia": "Fibra óptica",
+   "simetrica": true,
+   "costoInstalacion": 120,
+   "costoEquipo": "Router ONT en comodato",
+   "velocidadMinimaGarantizada": null,
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "50% de descuento solo el primer mes",
+   "notas": "",
+   "fuentes": [
+    "https://win-internet.com.pe/hogar/plan-internet-duo/",
+    "https://win-internet.com.pe/pdf/lima.pdf"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "instalacion": "en_conflicto",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "win-fibra-1000",
+   "tipo": "hogar",
+   "operador": "Win",
+   "nombre": "Fibra 1000 Mbps",
+   "precioPromo": 69.95,
+   "mesesPromo": 1,
+   "precioRegular": 139.9,
+   "velocidadMbps": 1000,
+   "tecnologia": "Fibra óptica",
+   "simetrica": true,
+   "costoInstalacion": 120,
+   "costoEquipo": "Router ONT en comodato",
+   "velocidadMinimaGarantizada": null,
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "50% de descuento solo el primer mes",
+   "notas": "",
+   "fuentes": [
+    "https://win-internet.com.pe/hogar/plan-internet-duo/",
+    "https://win.pe/hogar"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "instalacion": "en_conflicto",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "wow-fibra-300",
+   "tipo": "hogar",
+   "operador": "WOW",
+   "nombre": "Internet 300 Mbps + DGO",
+   "precioPromo": 79.9,
+   "mesesPromo": 6,
+   "precioRegular": 84.9,
+   "velocidadMbps": 300,
+   "tecnologia": "Fibra óptica",
+   "simetrica": null,
+   "costoInstalacion": 0,
+   "costoEquipo": null,
+   "velocidadMinimaGarantizada": "70% (210 Mbps)",
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": "La web de WOW indica 'plazo forzoso' sin publicar su duración en la página consultada",
+   "condicionPromo": "Descuento de S/ 5 por hasta 6 recibos solo si pagas puntual; velocidad promocional de 500 Mbps por 6 meses",
+   "notas": "Incluye app DGO (32 canales) por 12 meses renovables a criterio de WOW. Cobertura en los 24 departamentos, sujeta a evaluación técnica.",
+   "fuentes": [
+    "https://wowperu.pe/promociones",
+    "https://wowperu.pe/planes/"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "instalacion": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "wow-fibra-500",
+   "tipo": "hogar",
+   "operador": "WOW",
+   "nombre": "Internet 500 Mbps + DGO",
+   "precioPromo": 84.9,
+   "mesesPromo": 6,
+   "precioRegular": 89.9,
+   "velocidadMbps": 500,
+   "tecnologia": "Fibra óptica",
+   "simetrica": null,
+   "costoInstalacion": 0,
+   "costoEquipo": "Router WiFi 6",
+   "velocidadMinimaGarantizada": "70%",
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": "La web de WOW indica 'plazo forzoso' sin publicar su duración en la página consultada",
+   "condicionPromo": "Descuento de hasta S/ 5 por 6 recibos con pago puntual; 1000 Mbps promocionales por 6 meses",
+   "notas": "El precio promocional se calculó con el descuento máximo de S/ 5 que publica WOW (nota 3 de su web).",
+   "fuentes": [
+    "https://wowperu.pe/planes/",
+    "https://wowperu.pe/promociones"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "instalacion": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "wow-fibra-1000",
+   "tipo": "hogar",
+   "operador": "WOW",
+   "nombre": "Internet 1000 Mbps + DGO Familia",
+   "precioPromo": 99.9,
+   "mesesPromo": 6,
+   "precioRegular": 104.9,
+   "velocidadMbps": 1000,
+   "tecnologia": "Fibra óptica",
+   "simetrica": null,
+   "costoInstalacion": 0,
+   "costoEquipo": "Router WiFi 6",
+   "velocidadMinimaGarantizada": "70% (700 Mbps)",
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": "La web de WOW indica 'plazo forzoso' sin publicar su duración en la página consultada",
+   "condicionPromo": "Descuento de S/ 5 por hasta 6 recibos solo si pagas puntual",
+   "notas": "La página de promociones dice S/ 99.90 con pago puntual; la de planes muestra S/ 94.90 como 'promo exclusiva digital'. Usamos S/ 99.90 (el mayor).",
+   "fuentes": [
+    "https://wowperu.pe/promociones",
+    "https://wowperu.pe/planes/"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "en_conflicto",
+    "instalacion": "no_verificado",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "mifibra-500",
+   "tipo": "hogar",
+   "operador": "MiFibra",
+   "nombre": "Internet 500 Mbps",
+   "precioPromo": 59.9,
+   "mesesPromo": 2,
+   "precioRegular": 79.9,
+   "velocidadMbps": 500,
+   "tecnologia": "Fibra óptica",
+   "simetrica": true,
+   "costoInstalacion": 0,
+   "costoEquipo": "Router WiFi 6 + Mesh S/ 5 al mes",
+   "velocidadMinimaGarantizada": null,
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "Precio de entrada para nuevas altas; velocidad promocional de 1000 Mbps",
+   "notas": "Una página de MiFibra dice 2 meses de promoción y otra 4 meses (6 en Arequipa y Huánuco). Calculamos con 2 meses (lo más caro para ti). Instalación gratis sujeta a evaluación crediticia.",
+   "fuentes": [
+    "https://www.mifibra.pe/informacion-de-planes/",
+    "https://www.mifibra.pe/internet-hogar/",
+    "https://www.mifibra.pe/informacion-a-abonados-y-usuarios/"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "instalacion": "oficial",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "mifibra-1500",
+   "tipo": "hogar",
+   "operador": "MiFibra",
+   "nombre": "Internet 1500 Mbps",
+   "precioPromo": 59.9,
+   "mesesPromo": 2,
+   "precioRegular": 99.9,
+   "velocidadMbps": 1500,
+   "tecnologia": "Fibra óptica",
+   "simetrica": false,
+   "costoInstalacion": 0,
+   "costoEquipo": "Router WiFi 6 + Mesh S/ 5 al mes",
+   "velocidadMinimaGarantizada": null,
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "Precio de entrada para nuevas altas",
+   "notas": "Subida de 1000 Mbps. Promoción de 2 o 4 meses según la página de MiFibra; calculamos con 2.",
+   "fuentes": [
+    "https://www.mifibra.pe/informacion-de-planes/",
+    "https://www.mifibra.pe/internet-hogar/",
+    "https://www.mifibra.pe/informacion-a-abonados-y-usuarios/"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "instalacion": "oficial",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "nacional",
+   "id": "mifibra-5000",
+   "tipo": "hogar",
+   "operador": "MiFibra",
+   "nombre": "Internet 5000 Mbps",
+   "precioPromo": 99.9,
+   "mesesPromo": 2,
+   "precioRegular": 189.9,
+   "velocidadMbps": 5000,
+   "tecnologia": "Fibra óptica",
+   "simetrica": false,
+   "costoInstalacion": 0,
+   "costoEquipo": "Router WiFi 7 + 2 Mesh (Lima)",
+   "velocidadMinimaGarantizada": null,
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "",
+   "notas": "Datos en conflicto: la tabla oficial de planes dice S/ 99.90 por 4 meses y luego S/ 189.90; la portada dice S/ 89.90 por 2 meses y luego S/ 139.90. Usamos el precio regular más alto.",
+   "fuentes": [
+    "https://www.mifibra.pe/informacion-de-planes/",
+    "https://www.mifibra.pe/internet-hogar/"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "en_conflicto",
+    "instalacion": "oficial",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "lima",
+   "id": "fiberpro-300",
+   "tipo": "hogar",
+   "operador": "FiberPro",
+   "nombre": "Plan Familiar 300 Mbps",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 50,
+   "velocidadMbps": 300,
+   "tecnologia": "Fibra óptica",
+   "simetrica": null,
+   "costoInstalacion": 0,
+   "costoEquipo": "Router ONT incluido",
+   "velocidadMinimaGarantizada": null,
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "",
+   "notas": "Los términos de junio 2026 llaman 300 Mbps al plan de S/ 50; la tabla de tarifas registradas lo nombra 'Plan Familiar 100 Mbps'. Confirma la velocidad. Sujeto a evaluación crediticia.",
+   "fuentes": [
+    "https://fiberpro.com.pe/contents/footer/T%C3%A9rminos%20y%20Condiciones%20-%20Junio%202026.pdf",
+    "https://fiberpro.com.pe/tarifas/"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "instalacion": "oficial",
+    "permanencia": "no_verificado"
+   }
+  },
+  {
+   "cobertura": "lima",
+   "id": "fiberpro-700",
+   "tipo": "hogar",
+   "operador": "FiberPro",
+   "nombre": "Plan Familiar 700 Mbps",
+   "precioPromo": null,
+   "mesesPromo": 0,
+   "precioRegular": 70,
+   "velocidadMbps": 700,
+   "tecnologia": "Fibra óptica",
+   "simetrica": null,
+   "costoInstalacion": 0,
+   "costoEquipo": "Router ONT incluido",
+   "velocidadMinimaGarantizada": null,
+   "topeGB": null,
+   "incluyeMesh": false,
+   "permanencia": null,
+   "condicionPromo": "",
+   "notas": "1000 Mbps promocionales los 3 primeros recibos. La tabla de tarifas registradas usa otro nombre de velocidad para S/ 70 (350 Mbps): confirma antes de contratar.",
+   "fuentes": [
+    "https://fiberpro.com.pe/contents/footer/T%C3%A9rminos%20y%20Condiciones%20-%20Junio%202026.pdf",
+    "https://fiberpro.com.pe/tarifas/"
+   ],
+   "fechaConsulta": "2026-10-20",
+   "verificacion": {
+    "precio": "oficial",
+    "instalacion": "oficial",
+    "permanencia": "no_verificado"
+   }
+  }
+ ]
+};

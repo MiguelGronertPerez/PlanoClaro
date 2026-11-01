@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob: https://lh3.googleusercontent.com; font-src 'self'; connect-src 'self' https://*.googleapis.com https://securetoken.googleapis.com https://identitytoolkit.googleapis.com https://firestore.googleapis.com https://*.firebaseio.com; frame-src https://*.firebaseapp.com; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>PlanoClaro · Compara planes de celular e internet en Perú, sin letra chiquita</title>
+<meta name="description" content="Compara planes postpago y de internet hogar de Claro, Movistar, Entel, Bitel, Win, WOW, MiFibra y FiberPro en Perú. Precio de promoción, precio regular y total a 12 meses en soles, con la letra pequeña explicada.">
+<meta name="theme-color" content="#f4f6f9">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_PE">
+<meta property="og:site_name" content="PlanoClaro">
+<meta property="og:title" content="PlanoClaro · Lo que pagas de verdad, mes a mes">
+<meta property="og:description" content="Planes de celular e internet hogar del Perú comparados a 12 meses, con sello de qué dato está verificado.">
+<meta property="og:image" content="img/og-planoclaro.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="PlanoClaro: tres planes comparados a 12 meses">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="stylesheet" href="css/estilos.css">
+<script src="js/arranque.js"></script>
+</head>
+<body>
+<a class="saltar" href="#principal">Saltar al contenido</a>
+<canvas id="fibra" class="fibra" aria-hidden="true"></canvas>
+
+<header class="cabecera">
+  <div class="contenedor cabecera__fila">
+    <a href="#" class="marca" data-ir="inicio" aria-label="PlanoClaro, ir al inicio">
+      <svg class="marca__logo" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><circle cx="16" cy="16" r="13" class="marca__aro"/><path d="M6 19c5-8 15-8 20-4" class="marca__haz"/><circle cx="24.5" cy="14.2" r="2.6" class="marca__pulso"/></svg>
+      <span>PlanoClaro</span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <button type="button" class="nav__btn" data-ir="comparar"><span>Comparar</span> <span class="nav__cuenta" id="carrito-n" aria-label="planes en el comparador">0</span></button>
+      <button type="button" class="nav__btn" data-ir="ahorro">Ahorro</button>
+      <button type="button" class="nav__btn" data-ir="reclamos">Reclamos</button>
+      <button type="button" class="nav__btn" data-ir="medidor">Medidor</button>
+      <button type="button" class="nav__btn" data-ir="cuenta" id="nav-cuenta">Mi cuenta</button>
+      <div class="menu-desplegable" id="menu-ajustes-wrap">
+        <button type="button" class="nav__btn nav__btn--desplegable" id="btn-menu-ajustes" aria-haspopup="true" aria-expanded="false" title="Ajustes de sonido y visualización">
+          <span data-icono="fuente" aria-hidden="true"></span>
+          <span>Ajustes</span>
+          <span class="desplegable__flecha" aria-hidden="true">▾</span>
+        </button>
+        <div class="menu-desplegable__panel" id="panel-menu-ajustes" hidden role="region" aria-label="Ajustes de visualización y audio">
+          <div class="desplegable__seccion">
+            <span class="desplegable__etq">Lectura en voz alta</span>
+            <button type="button" class="desplegable__item" id="btn-narrador" aria-pressed="false">
+              <span data-icono="voz" aria-hidden="true"></span>
+              <span class="narrador__txt">Leer en voz alta</span>
+            </button>
+          </div>
+          <div class="desplegable__seccion">
+            <span class="desplegable__etq">Tamaño de letra (<span id="texto-escala-val">100 %</span>)</span>
+            <div class="desplegable__escala-fila">
+              <button type="button" class="btn-escala" id="btn-texto-menos" title="Reducir letra" aria-label="Reducir tamaño de letra">A-</button>
+              <button type="button" class="btn-escala" id="btn-texto-reset" title="Restablecer tamaño normal" aria-label="Restablecer tamaño normal">Normal</button>
+              <button type="button" class="btn-escala" id="btn-texto-mas" title="Aumentar letra" aria-label="Aumentar tamaño de letra">A+</button>
+            </div>
+          </div>
+          <div class="desplegable__seccion">
+            <span class="desplegable__etq">Efectos de sonido</span>
+            <button type="button" class="desplegable__item" id="btn-sonido" aria-pressed="false">
+              <span data-icono="musica" aria-hidden="true"></span>
+              <span class="sonido__txt">Sonido: no</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="nav__btn nav__btn--asistente" id="abrir-asistente" aria-expanded="false" aria-controls="asistente">Asistente</button>
+    </nav>
+  </div>
+</header>
+
+<main id="principal" tabindex="-1">
+  <!-- INICIO -->
+  <section id="vista-inicio" class="vista" aria-labelledby="t-inicio">
+    <div class="contenedor heroe">
+      <div class="heroe__texto">
+        <h1 id="t-inicio" class="titular">Lo que pagas <span class="titular__luz">de verdad</span>, mes a mes.</h1>
+        <p class="intro">Planes de celular e internet del Perú. Te mostramos el precio de la promoción, el que viene después y el total de un año, en soles y sin jerga.</p>
+        <div class="opciones-servicio" role="group" aria-label="¿Qué quieres comparar?">
+          <button type="button" class="servicio inclinable" data-servicio="movil">
+            <span class="servicio__icono" data-icono="celular" aria-hidden="true"></span>
+            <span class="servicio__titulo">Plan para mi celular</span>
+            <span class="servicio__texto">Postpago de Claro, Movistar, Entel y Bitel</span>
+            <span class="servicio__flecha" data-icono="flecha" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="servicio inclinable" data-servicio="hogar">
+            <span class="servicio__icono" data-icono="casa" aria-hidden="true"></span>
+            <span class="servicio__titulo">Internet para mi casa</span>
+            <span class="servicio__texto">Claro, Movistar, Entel, Bitel, Win, WOW, MiFibra y FiberPro</span>
+            <span class="servicio__flecha" data-icono="flecha" aria-hidden="true"></span>
+          </button>
+        </div>
+        <p class="aviso-datos" id="aviso-datos" role="status"></p>
+      </div>
+      <figure class="escena" id="escena" aria-label="Ejemplos de planes reales">
+        <noscript><p>Activa JavaScript para usar el comparador.</p></noscript>
+      </figure>
+    </div>
+
+    <section class="contenedor pasos" aria-labelledby="t-pasos">
+      <h2 id="t-pasos">Tres pasos, dos minutos</h2>
+      <ol class="pasos__lista">
+        <li class="paso revelar"><span class="paso__n" aria-hidden="true">1</span><h3>Cuéntanos cómo lo usas</h3><p>Una pregunta por pantalla, con opciones grandes. Si quieres precisión, mide tus GB reales con nuestra guía.</p></li>
+        <li class="paso revelar"><span class="paso__n" aria-hidden="true">2</span><h3>Descartamos lo que no te sirve</h3><p>Y te decimos por qué: poca velocidad, sin cobertura en provincias o fuera de tu presupuesto.</p></li>
+        <li class="paso revelar"><span class="paso__n" aria-hidden="true">3</span><h3>Comparas el año completo</h3><p>Promoción + precio regular + instalación. Cada dato con su sello: oficial, secundario o no verificado.</p></li>
+      </ol>
+    </section>
+
+    <!-- RESEÑAS FLOTANTES DE LA COMUNIDAD -->
+    <section class="contenedor resenas-inicio" id="seccion-resenas-inicio" aria-labelledby="t-resenas-inicio">
+      <div class="resenas-inicio__cabeza">
+        <h2 id="t-resenas-inicio">Reseñas y calificaciones de la comunidad</h2>
+        <p class="intro">Opiniones verificadas con Google tras comparar y elegir el mejor plan de internet o celular en el Perú.</p>
+      </div>
+      <div class="resenas-inicio__muro" id="resenas-flotantes-contenedor" aria-live="polite">
+        <!-- Tarjetas dinámicas que flotan y rotan suavemente -->
+      </div>
+      <div class="resenas-inicio__pie">
+        <button type="button" class="boton boton--primario" data-ir="encuesta">Evaluar satisfacción y dejar mi reseña</button>
+      </div>
+    </section>
+  </section>
+
+  <!-- CUESTIONARIO -->
+  <section id="vista-cuestionario" class="vista contenedor" hidden aria-labelledby="t-cuestionario">
+    <div class="cuestionario__cabeza">
+      <h1 id="t-cuestionario" class="titulo-vista" tabindex="-1">Cuéntanos cómo usas internet</h1>
+      <p class="progreso__texto" id="progreso-texto" aria-live="polite"></p>
+      <div class="progreso" aria-hidden="true"><div class="progreso__barra" id="progreso-barra"></div></div>
+      <p class="medido" id="aviso-medido" hidden></p>
+    </div>
+    <form id="form-cuestionario" class="cuestionario" novalidate>
+      <div id="preguntas" class="preguntas"></div>
+      <div id="resumen-errores" class="errores" role="alert" tabindex="-1" hidden></div>
+      <div class="acciones">
+        <button type="button" class="boton boton--fantasma" id="btn-volver">Volver</button>
+        <button type="button" class="boton boton--fantasma" id="btn-anterior" hidden>Anterior</button>
+        <button type="button" class="boton boton--primario" id="btn-siguiente" hidden>Siguiente</button>
+        <button type="submit" class="boton boton--primario" id="btn-enviar">Ver mis 3 opciones</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- RESULTADOS -->
+  <section id="vista-resultados" class="vista contenedor" hidden aria-labelledby="t-resultados">
+    <h1 id="t-resultados" class="titulo-vista" tabindex="-1">Tus 3 opciones</h1>
+    <p id="resumen-perfil" class="intro"></p>
+    <div id="resultados" class="resultados"></div>
+    <section class="panel letra-chica" aria-labelledby="t-letra">
+      <h2 id="t-letra">Letra pequeña, aclarada</h2>
+      <div id="letra-chica" class="letra-chica__grid"></div>
+    </section>
+    <details class="panel descartados">
+      <summary id="descartados-titulo">Planes que descartamos y por qué</summary>
+      <ul id="descartados-lista"></ul>
+    </details>
+    <aside class="panel invitar-encuesta" aria-labelledby="t-inv-encuesta">
+      <h2 id="t-inv-encuesta">¿Elegiste el mejor servicio? Evalúa tu experiencia</h2>
+      <p>Completa la encuesta de satisfacción (escala SUS) y comparte tu reseña y calificación del plan que elegiste. Tu opinión aparecerá en la página principal.</p>
+      <button type="button" class="boton boton--primario" data-ir="encuesta">Evaluar satisfacción y dejar reseña</button>
+    </aside>
+    <div class="acciones">
+      <button type="button" class="boton boton--fantasma" id="btn-editar">Cambiar respuestas</button>
+      <button type="button" class="boton boton--primario" id="btn-reiniciar">Comparar otro servicio</button>
+    </div>
+  </section>
+
+  <!-- COMPARADOR -->
+  <section id="vista-comparar" class="vista contenedor" hidden aria-labelledby="t-comparar">
+    <h1 id="t-comparar" class="titulo-vista" tabindex="-1">Comparar lado a lado</h1>
+    <p class="intro">Agrega hasta 3 planes del mismo tipo desde tus resultados. Resaltamos lo que cambia entre ellos y el mejor valor de cada fila.</p>
+    <div id="comparador"></div>
+  </section>
+
+  <!-- CUENTA -->
+  <section id="vista-cuenta" class="vista contenedor" hidden aria-labelledby="t-cuenta">
+    <h1 id="t-cuenta" class="titulo-vista" tabindex="-1">Mi cuenta</h1>
+    <p class="intro" id="cuenta-modo"></p>
+    <div id="cuenta"></div>
+  </section>
+
+  <!-- MEDIDOR -->
+  <section id="vista-medidor" class="vista contenedor" hidden aria-labelledby="t-medidor">
+    <h1 id="t-medidor" class="titulo-vista" tabindex="-1">Mide cuántos GB usas de verdad</h1>
+    <p class="intro">Tu celular ya lo sabe. Sigue los pasos, anota el número del último mes y lo usamos para recomendarte.</p>
+    <div id="medidor"></div>
+  </section>
+
+  <!-- CALCULADORA DE AHORRO -->
+  <section id="vista-ahorro" class="vista contenedor" hidden aria-labelledby="t-ahorro">
+    <h1 id="t-ahorro" class="titulo-vista" tabindex="-1">Calculadora de ahorro real</h1>
+    <p class="intro">Compara lo que pagas en tu recibo mensual frente a las tarifas de PlanoClaro. Detecta cargos indebidos de routers o seguros y proyecta tu ahorro a 12 meses.</p>
+    <div id="ahorro"></div>
+  </section>
+
+  <!-- GENERADOR DE RECLAMOS OSIPTEL -->
+  <section id="vista-reclamos" class="vista contenedor" hidden aria-labelledby="t-reclamos">
+    <h1 id="t-reclamos" class="titulo-vista" tabindex="-1">Reclamos y solicitudes OSIPTEL</h1>
+    <p class="intro">Genera solicitudes formales con la base legal peruana (Ley 31207 y TUO de OSIPTEL) para pedir la baja en 5 días hábiles o reclamar si no te garantizan el 70 % de velocidad.</p>
+    <div id="reclamos"></div>
+  </section>
+
+  <!-- GLOSARIO CLARO -->
+  <section id="vista-glosario" class="vista contenedor" hidden aria-labelledby="t-glosario">
+    <h1 id="t-glosario" class="titulo-vista" tabindex="-1">Glosario de términos en lenguaje claro</h1>
+    <div id="glosario"></div>
+  </section>
+
+  <!-- ENCUESTA SUS Y RESEÑA -->
+  <section id="vista-encuesta" class="vista contenedor" hidden aria-labelledby="t-encuesta">
+    <h1 id="t-encuesta" class="titulo-vista" tabindex="-1">Satisfacción y reseña de tu experiencia</h1>
+    <p class="intro">Evalúa la usabilidad de PlanoClaro (escala SUS) y comparte tu calificación sobre el servicio que elegiste con tu cuenta de Google.</p>
+    <div id="encuesta"></div>
+  </section>
+
+  <!-- MÉTRICAS -->
+  <section id="vista-metricas" class="vista contenedor" hidden aria-labelledby="t-metricas">
+    <h1 id="t-metricas" class="titulo-vista" tabindex="-1">Métricas de experiencia (UX)</h1>
+    <p class="intro">Datos de este dispositivo, solo si diste permiso. Sirven para el informe del curso: tiempo hasta la recomendación, abandono, tareas completadas, SUS y prueba A/B.</p>
+    <div id="metricas"></div>
+  </section>
+
+  <!-- ADMIN -->
+  <section id="vista-admin" class="vista contenedor" hidden aria-labelledby="t-admin">
+    <h1 id="t-admin" class="titulo-vista" tabindex="-1">Panel de administración</h1>
+    <p class="intro">Panel de gestión y administración del catálogo de planes de telecomunicaciones.</p>
+    <div id="admin"></div>
+  </section>
+</main>
+
+<!-- Asistente (panel no modal) -->
+<aside id="asistente" class="asistente" hidden aria-labelledby="t-asistente">
+  <div class="asistente__cabeza">
+    <div class="asistente__titular">
+      <h2 id="t-asistente">Asistente PlanoClaro</h2>
+      <p class="asistente__estado"><span class="asistente__punto" aria-hidden="true"></span> En línea · Telecom Perú</p>
+    </div>
+    <div class="asistente__herramientas">
+      <button type="button" class="icono-btn icono-btn--chico" id="reiniciar-asistente" aria-label="Limpiar chat" title="Limpiar conversación"><span data-icono="chat" aria-hidden="true"></span></button>
+      <button type="button" class="icono-btn" id="cerrar-asistente" aria-label="Cerrar asistente"><span data-icono="cerrar" aria-hidden="true"></span></button>
+    </div>
+  </div>
+  <p class="asistente__nota sr-only">Responde automáticamente con reglas fijas y datos oficiales de planes y normas de OSIPTEL.</p>
+  <div id="chat-log" class="chat" role="log" aria-live="polite" aria-relevant="additions" tabindex="0" aria-label="Conversación"></div>
+  <div class="chat__barra-sugerencias" aria-label="Preguntas sugeridas">
+    <span class="sr-only">Preguntas sugeridas:</span>
+    <div class="chat__sugerencias" id="chat-sugerencias" role="group" aria-label="Preguntas sugeridas"></div>
+  </div>
+  <form id="chat-form" class="chat__form" novalidate>
+    <label for="chat-entrada" class="sr-only">Escribe tu pregunta</label>
+    <input id="chat-entrada" type="text" maxlength="200" autocomplete="off" placeholder="Pregunta sobre planes, leyes o dudas...">
+    <button type="submit" class="boton boton--primario chat__btn-enviar" id="chat-btn-enviar">Enviar</button>
+  </form>
+</aside>
+
+<!-- Consentimiento de métricas -->
+<div id="consentimiento" class="consentimiento" role="region" aria-label="Privacidad" hidden>
+  <p><strong>¿Nos ayudas a medir la usabilidad?</strong> Guardamos solo en este dispositivo cuánto tardas y si terminas el cuestionario. Nada sale de tu navegador. Puedes borrarlo cuando quieras en Métricas.</p>
+  <div class="consentimiento__acciones">
+    <button type="button" class="boton boton--fantasma" id="consent-no">No, gracias</button>
+    <button type="button" class="boton boton--primario" id="consent-si">Sí, acepto</button>
+  </div>
+</div>
+<div id="aviso" class="aviso" role="status" aria-live="polite"></div>
+
+<footer class="pie">
+  <div class="contenedor pie__rejilla">
+    <div>
+      <p class="pie__marca">PlanoClaro</p>
+      <p>PlanoClaro · Plataforma ciudadana de comparación de telecomunicaciones en el Perú · Interacción Humano Computador · UCSS · Miguel Armando Gronert Perez. PlanoClaro no vende planes ni cobra comisiones.</p>
+    </div>
+    <div>
+      <p>Precios en soles (S/) con IGV, consultados el 20/10/2026. Cambian cada mes y dependen de la cobertura en tu distrito: confirma con el operador y en el <a href="https://serviciosweb.osiptel.gob.pe/ConsultaSIRT/" target="_blank" rel="noopener noreferrer">SIRT de OSIPTEL<span class="sr-only"> (se abre en otra pestaña)</span></a> antes de contratar.</p>
+      <p class="pie__enlaces"><button type="button" class="enlace" data-ir="encuesta">Satisfacción y reseñas</button> · <button type="button" class="enlace" data-ir="ahorro">Calculadora de ahorro</button> · <button type="button" class="enlace" data-ir="reclamos">Reclamos OSIPTEL</button> · <button type="button" class="enlace" data-ir="glosario">Glosario claro</button> · <button type="button" class="enlace" data-ir="metricas">Métricas UX</button> · <button type="button" class="enlace" data-ir="admin">Administración</button></p>
+    </div>
+  </div>
+</footer>
+
+<script src="data/planes.js" defer></script>
+<script src="js/firebase-config.js" defer></script>
+<script src="js/utilidades.js" defer></script>
+<script src="js/iconos.js" defer></script>
+<script src="js/movimiento.js" defer></script>
+<script src="js/sonido.js" defer></script>
+<script src="js/almacen.js" defer></script>
+<script src="js/datos.js" defer></script>
+<script src="js/preguntas.js" defer></script>
+<script src="js/costos.js" defer></script>
+<script src="js/motor.js" defer></script>
+<script src="js/metricas.js" defer></script>
+<script src="js/cuestionario.js" defer></script>
+<script src="js/vista-resultados.js" defer></script>
+<script src="js/carrito.js" defer></script>
+<script src="js/resenas.js" defer></script>
+<script src="js/login.js" defer></script>
+<script src="js/cuenta.js" defer></script>
+<script src="js/medidor.js" defer></script>
+<script src="js/ahorro.js" defer></script>
+<script src="js/reclamos.js" defer></script>
+<script src="js/accesibilidad.js" defer></script>
+<script src="js/asistente.js" defer></script>
+<script src="js/sus.js" defer></script>
+<script src="js/admin.js" defer></script>
+<script src="js/escena.js" defer></script>
+<script src="js/fibra3d.js" defer></script>
+<script src="js/app.js" defer></script>
+</body>
+</html>

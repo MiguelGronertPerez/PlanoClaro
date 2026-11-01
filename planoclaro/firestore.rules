@@ -1,0 +1,96 @@
+rules_version = '2';
+// Reglas de seguridad de Firestore para PlanoClaro.
+// Esquema de /usuarios/{uid}:
+//   perfil       : { nombre, email, foto, proveedor, fechaCreacion }
+//   favoritos    : [planId, ...]           (max 50)
+//   sesiones     : { [sesId]: { proveedor, creado, expira, userAgent } }
+//   ultimoAcceso : timestamp ISO string
+//   actualizado  : timestamp ISO string
+// Las métricas UX y encuesta SUS NUNCA se envían a Firestore.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Perfil de usuario ──────────────────────────────────────
+    // Solo el propio usuario puede leer/escribir su documento.
+    // Valida que solo escriba los campos permitidos (evita escalada de privilegios).
+    match /usuarios/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+
+      allow create: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly([
+             'perfil', 'favoritos', 'sesiones', 'ultimoAcceso', 'actualizado'
+           ])
+        && _perfilValido(request.resource.data)
+        && _favoritosValidos(request.resource.data);
+
+      allow update: if request.auth != null
+        && request.auth.uid == uid
+        // No puede agregar claves nuevas fuera del esquema permitido
+        && request.resource.data.keys().hasOnly([
+             'perfil', 'favoritos', 'sesiones', 'ultimoAcceso', 'actualizado'
+           ])
+        && _perfilValido(request.resource.data)
+        && _favoritosValidos(request.resource.data)
+        // Límite: máximo 20 sesiones registradas (previene abuso de escritura)
+        && (!('sesiones' in request.resource.data)
+            || request.resource.data.sesiones.keys().size() <= 20);
+    }
+
+    // ── Catálogo de planes ─────────────────────────────────────
+    // Lectura pública; escritura solo con custom claim admin == true
+    // asignado desde el servidor con el Admin SDK (nunca desde el navegador).
+    match /catalogo/{doc} {
+      allow read: if true;
+      allow write: if request.auth != null
+        && request.auth.token.admin == true
+        && request.resource.data.planes is list
+        && request.resource.data.planes.size() < 500;
+    }
+
+    // ── Reseñas y calificaciones de la comunidad ───────────────
+    // Lectura pública; creación solo para usuarios autenticados.
+    // Solo el autor puede eliminar o actualizar su reseña (o sumar 'utiles').
+    match /resenas/{resenaId} {
+      allow read: if true;
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.keys().hasOnly([
+             'uid', 'autor', 'correo', 'calificacion', 'sentimiento',
+             'servicio', 'planElegido', 'titulo', 'comentario', 'fecha', 'verificado', 'utiles'
+           ])
+        && request.resource.data.calificacion >= 1
+        && request.resource.data.calificacion <= 5
+        && request.resource.data.comentario is string
+        && request.resource.data.comentario.size() >= 15
+        && request.resource.data.comentario.size() <= 1000;
+
+      allow update: if request.auth != null
+        && (request.auth.uid == resource.data.uid
+            || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['utiles'])
+                && request.resource.data.utiles is number));
+
+      allow delete: if request.auth != null && request.auth.uid == resource.data.uid;
+    }
+
+    // ── Todo lo demás: denegado por defecto ────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+
+  // ── Funciones de validación ──────────────────────────────────
+  function _perfilValido(data) {
+    return !('perfil' in data)
+      || (data.perfil is map
+          && (!('nombre' in data.perfil)    || data.perfil.nombre is string)
+          && (!('email'  in data.perfil)    || data.perfil.email  is string)
+          && (!('foto'   in data.perfil)    || data.perfil.foto   is string)
+          && (!('proveedor' in data.perfil) || data.perfil.proveedor is string));
+  }
+
+  function _favoritosValidos(data) {
+    return !('favoritos' in data)
+      || (data.favoritos is list && data.favoritos.size() <= 50);
+  }
+}

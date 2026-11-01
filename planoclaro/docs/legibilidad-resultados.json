@@ -1,0 +1,66 @@
+{
+ "index.html": {
+  "palabras": 509,
+  "frases": 60,
+  "palabras_por_frase": 8.5,
+  "silabas_por_palabra": 2.08,
+  "fernandez_huerta": 73.4,
+  "inflesz": 68.7
+ },
+ "js/preguntas.js": {
+  "palabras": 288,
+  "frases": 40,
+  "palabras_por_frase": 7.2,
+  "silabas_por_palabra": 1.84,
+  "fernandez_huerta": 88.9,
+  "inflesz": 84.8
+ },
+ "js/asistente.js": {
+  "palabras": 2106,
+  "frases": 226,
+  "palabras_por_frase": 9.3,
+  "silabas_por_palabra": 1.98,
+  "fernandez_huerta": 78.6,
+  "inflesz": 74.3
+ },
+ "js/vista-resultados.js": {
+  "palabras": 352,
+  "frases": 64,
+  "palabras_por_frase": 5.5,
+  "silabas_por_palabra": 2.06,
+  "fernandez_huerta": 77.7,
+  "inflesz": 73.0
+ },
+ "js/medidor.js": {
+  "palabras": 139,
+  "frases": 17,
+  "palabras_por_frase": 8.2,
+  "silabas_por_palabra": 1.94,
+  "fernandez_huerta": 82.0,
+  "inflesz": 77.6
+ },
+ "js/cuestionario.js": {
+  "palabras": 40,
+  "frases": 19,
+  "palabras_por_frase": 2.1,
+  "silabas_por_palabra": 2.08,
+  "fernandez_huerta": 80.2,
+  "inflesz": 75.5
+ },
+ "js/utilidades.js": {
+  "palabras": 44,
+  "frases": 9,
+  "palabras_por_frase": 4.9,
+  "silabas_por_palabra": 2.18,
+  "fernandez_huerta": 70.9,
+  "inflesz": 66.0
+ },
+ "TOTAL": {
+  "palabras": 3478,
+  "frases": 435,
+  "palabras_por_frase": 8.0,
+  "silabas_por_palabra": 1.99,
+  "fernandez_huerta": 79.1,
+  "inflesz": 74.7
+ }
+}
