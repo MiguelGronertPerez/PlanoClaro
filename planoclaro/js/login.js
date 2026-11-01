@@ -64,7 +64,12 @@
         proveedor.addScope('email');
         proveedor.addScope('profile');
         proveedor.setCustomParameters({ prompt: 'select_account' });
-        const cred = await auth.signInWithPopup(proveedor);
+        let cred;
+        try {
+          cred = await auth.signInWithPopup(proveedor);
+        } catch (err) {
+          throw new Error(this._mensajeError(err.code || err.message));
+        }
         const u = cred.user;
         await this._registrarSesion(u);
         await PC.login._persistirPerfil(u, 'google');
