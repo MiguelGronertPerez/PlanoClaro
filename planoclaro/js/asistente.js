@@ -27,7 +27,7 @@ PC.asistente = {
     },
     {
       id: 'portabilidad',
-      claves: ['portabilidad', 'portar', 'cambiar de operador', 'cambiarme', 'mantener mi numero', 'mismo numero', 'pasarme de empresa', 'pasar mi linea', 'cambiar de empresa'],
+      claves: ['portabilidad', 'portar', 'cambiar de operador', 'cambio de operador', 'cambiarme de operador', 'cambiarme', 'mantener mi numero', 'mismo numero', 'pasarme de empresa', 'pasar mi linea', 'cambiar de empresa', 'cambio de empresa', 'cambiar de chip', 'migrar de empresa'],
       pregunta: '¿Cómo me cambio de empresa sin perder mi número?',
       r: [
         'Eso se llama portabilidad numérica. Es 100 % gratis en todo el Perú.',
@@ -486,125 +486,387 @@ PC.asistente = {
       .trim();
   },
 
-  /* Consulta dinámica del catálogo en vivo con desglose matemático transparente */
-  consultarCatalogo(textoNorm) {
-    const catalogo = PC.estado && Array.isArray(PC.estado.catalogo) ? PC.estado.catalogo : [];
+  /* ── 1. Motor Semántico Inteligente de Consulta al Catálogo ── */
+  consultarCatalogo(textoNorm, textoOriginal) {
+    const catalogo = PC.estado && Array.isArray(PC.estado.catalogo) ? PC.estado.catalogo : (window.PLANOCLARO_DATA ? window.PLANOCLARO_DATA.planes : []);
     if (!catalogo.length) return null;
 
-    const quiereMovil = /celular|movil|postpago|linea|fono/.test(textoNorm);
-    const quiereHogar = /casa|hogar|internet|fibra|wifi|fijo/.test(textoNorm);
-    const buscaBarato = /barato|economico|menor precio|mas comodo|menos cuesta|costo bajo/.test(textoNorm);
-    const buscaMasGigas = /mas gigas|mas gb|mas datos|mayor cantidad de datos|mas internet/.test(textoNorm);
-    const buscaMasVelocidad = /mas rapido|mayor velocidad|mas mbps|mas megas de velocidad|maxima velocidad|1000/.test(textoNorm);
+    const t = ' ' + textoNorm + ' ';
 
-    // Consulta del plan más barato
+    // Operadores oficiales en Perú
+    const operadores = [
+      { id: 'claro', nombre: 'Claro' },
+      { id: 'movistar', nombre: 'Movistar' },
+      { id: 'entel', nombre: 'Entel' },
+      { id: 'bitel', nombre: 'Bitel' },
+      { id: 'win', nombre: 'Win' },
+      { id: 'wow', nombre: 'WOW' },
+      { id: 'mifibra', nombre: 'MiFibra' },
+      { id: 'fiberpro', nombre: 'FiberPro' }
+    ];
+    const opDetectado = operadores.find(op => new RegExp(`\\b${op.id}\\b`, 'i').test(t));
+
+    // Detección de tipo de servicio (Móvil vs Hogar)
+    const quiereMovil = /celular|movil|postpago|linea|chip|fono|datos|gigas?|gb\b/.test(t);
+    const quiereHogar = /casa|hogar|internet|fibra|wifi|fijo|mbps|megas?\b/.test(t);
+    const tipoFiltro = (quiereMovil && !quiereHogar) ? 'movil' : (quiereHogar && !quiereMovil) ? 'hogar' : null;
+
+    // A. Extracción de Precios / Presupuestos ("40 soles", "s/ 40", "menos de 50", "hasta 60", "plan de 40", "con 40 soles")
+    const regexPrecio = /(?:de\s+|por\s+|con\s+|unos?\s+|hasta\s+|menos\s+de\s+|alrededor\s+de\s+|presupuesto\s+de\s+|plan\s+de\s+)?(?:s\/?\.?\s*)?(\d{2,3})(?:\s*(?:soles?|lucas?|so\b|al\s*mes|mensual))/i;
+    const matchP1 = t.match(regexPrecio);
+    const matchP2 = !matchP1 ? t.match(/(?:menos de|maximo|hasta|alrededor de|unos?|presupuesto de|pagar|plan de)\s*(?:s\/?\.?\s*)?(\d{2,3})\b/i) : null;
+    const precioNumero = matchP1 ? parseInt(matchP1[1], 10) : (matchP2 ? parseInt(matchP2[1], 10) : null);
+
+    // B. Extracción de Velocidad en Mbps ("100 megas", "200 mbps", "500 megas de velocidad")
+    const matchVel = t.match(/(\d{2,4})\s*(?:mbps|megas?\s*de\s*velocidad|megas?\b)/i);
+    const velocidadNumero = matchVel ? parseInt(matchVel[1], 10) : null;
+
+    // C. Extracción de Gigas en GB ("30 gb", "50 gigas", "100 gb")
+    const matchGB = t.match(/(\d{1,3})\s*(?:gb|gigas?\b)/i);
+    const gbNumero = matchGB ? parseInt(matchGB[1], 10) : null;
+
+    // D. Comparativa directa entre dos operadores ("claro o entel", "movistar vs bitel", "diferencia entre win y wow")
+    const matchComp = t.match(/(?:que es mejor|cual es mejor|diferencia entre|comparar|vs)?\s*(claro|movistar|entel|bitel|win|wow|mifibra|fiberpro)\s+(?:y|o|vs|con|frente a)\s+(claro|movistar|entel|bitel|win|wow|mifibra|fiberpro)/i);
+    if (matchComp) {
+      const opA = matchComp[1].toLowerCase(), opB = matchComp[2].toLowerCase();
+      if (opA !== opB) return this.generarComparativaOperadores(opA, opB, catalogo);
+    }
+
+    // 1. Prioridad: Consulta por PRECIO / PRESUPUESTO (ej. "si quiero un plan de 40 soles cuales son mis opciones")
+    if (precioNumero && precioNumero >= 20 && precioNumero <= 250) {
+      return this.generarRespuestaPorPrecio(precioNumero, tipoFiltro, opDetectado ? opDetectado.nombre : null, catalogo);
+    }
+
+    // 2. Consulta por VELOCIDAD de Hogar (ej. "planes de 100 megas", "fibra de 200 mbps")
+    if (velocidadNumero && velocidadNumero >= 20 && velocidadNumero <= 1500) {
+      return this.generarRespuestaPorVelocidad(velocidadNumero, opDetectado ? opDetectado.nombre : null, catalogo);
+    }
+
+    // 3. Consulta por GIGAS de Celular (ej. "planes de 30 gigas", "quiero 50 gb")
+    if (gbNumero && gbNumero >= 5 && gbNumero <= 300) {
+      return this.generarRespuestaPorGigas(gbNumero, opDetectado ? opDetectado.nombre : null, catalogo);
+    }
+
+    // 4. Consulta de "más barato" o "económico"
+    const buscaBarato = /barato|economico|menor precio|mas comodo|menos cuesta|costo bajo/.test(t);
     if (buscaBarato) {
-      if (quiereMovil || !quiereHogar) {
-        // Encontrar por precio regular (la mensualidad fija más baja)
-        const porRegular = [...catalogo.filter(p => p.tipo === 'movil')].sort((a, b) => a.precioRegular - b.precioRegular);
-        // Encontrar por costo anual (menor pago total en 12 meses, considerando promociones)
-        const porAnual = [...catalogo.filter(p => p.tipo === 'movil')].sort((a, b) => PC.costos.anual(a) - PC.costos.anual(b));
-
-        const pReg = porRegular[0];
-        const pAnu = porAnual[0];
-
-        if (pReg) {
-          const r = [
-            `En precio regular de siempre, el plan de celular más económico es ${pReg.nombre} de ${pReg.operador} a ${PC.util.soles(pReg.precioRegular)} al mes con ${pReg.gbAltaVelocidad} GB (total de ${PC.util.soles(pReg.precioRegular * 12)} en 12 meses).`
-          ];
-
-          // Si hay otro plan con promoción inicial que sume menos al año
-          if (pAnu && pAnu.id !== pReg.id && pAnu.precioPromo) {
-            r.push(
-              `Si buscas la mejor oferta inicial, ${pAnu.nombre} de ${pAnu.operador} tiene una promoción de ${PC.util.soles(pAnu.precioPromo)} al mes durante los primeros ${pAnu.mesesPromo} meses (su precio regular después es ${PC.util.soles(pAnu.precioRegular)}). En tu primer año pagarás en total ${PC.util.soles(PC.costos.anual(pAnu))} con ${pAnu.gbAltaVelocidad} GB.`
-            );
-          }
-
-          return {
-            id: 'dinamico_barato_movil',
-            r,
-            accionBoton: { texto: `Comparar ${pReg.nombre}`, idPlan: pReg.id },
-            sugiere: ['gb', 'operador_bitel', 'permanencia', 'ahorro']
-          };
-        }
-      }
-
-      if (quiereHogar) {
-        const porRegular = [...catalogo.filter(p => p.tipo === 'hogar')].sort((a, b) => a.precioRegular - b.precioRegular);
-        const porAnual = [...catalogo.filter(p => p.tipo === 'hogar')].sort((a, b) => PC.costos.anual(a) - PC.costos.anual(b));
-
-        const pReg = porRegular[0];
-        const pAnu = porAnual[0];
-
-        if (pReg) {
-          const r = [
-            `En precio regular, el plan de internet hogar más económico es ${pReg.nombre} de ${pReg.operador} a ${PC.util.soles(pReg.precioRegular)} al mes con ${pReg.velocidadMbps} Mbps (total de ${PC.util.soles(pReg.precioRegular * 12)} en 12 meses).`
-          ];
-
-          if (pAnu && pAnu.id !== pReg.id && pAnu.precioPromo) {
-            r.push(
-              `Por descuento de bienvenida, ${pAnu.nombre} de ${pAnu.operador} baja a ${PC.util.soles(pAnu.precioPromo)} al mes durante los primeros ${pAnu.mesesPromo} meses (precio regular ${PC.util.soles(pAnu.precioRegular)}), sumando un total de ${PC.util.soles(PC.costos.anual(pAnu))} en el primer año.`
-            );
-          }
-
-          return {
-            id: 'dinamico_barato_hogar',
-            r,
-            accionBoton: { texto: `Comparar ${pReg.nombre}`, idPlan: pReg.id },
-            sugiere: ['mbps', 'cobertura', 'promocion', 'ahorro']
-          };
-        }
-      }
+      return this.generarRespuestaMasBarato(tipoFiltro, opDetectado ? opDetectado.nombre : null, catalogo);
     }
 
-    // Consulta de mayor cantidad de GB
-    if (buscaMasGigas) {
-      const conGigas = catalogo.filter(p => p.tipo === 'movil').sort((a, b) => (b.gbAltaVelocidad || 0) - (a.gbAltaVelocidad || 0));
-      const p = conGigas[0];
-      if (p) {
-        const promoTxt = p.precioPromo ? ` (en promoción inicial a ${PC.util.soles(p.precioPromo)} por ${p.mesesPromo} meses)` : '';
-        return {
-          id: 'dinamico_mas_gigas',
-          r: [
-            `El plan móvil con mayor paquete de datos en PlanoClaro es ${p.nombre} de ${p.operador}.`,
-            `Te brinda ${p.gbAltaVelocidad} GB de alta velocidad por ${PC.util.soles(p.precioRegular)} al mes${promoTxt}.`,
-            `Total en un año completo: ${PC.util.soles(PC.costos.anual(p))}.`
-          ],
-          accionBoton: { texto: `Comparar ${p.nombre}`, idPlan: p.id },
-          sugiere: ['velocidad', 'compartir', 'medidor']
-        };
-      }
+    // 5. Mayor cantidad de GB o mayor velocidad
+    if (/mas gigas|mas gb|mas datos|mayor cantidad de datos|mas internet/.test(t)) {
+      return this.generarRespuestaMasGigas(catalogo);
+    }
+    if (/mas rapido|mayor velocidad|mas mbps|mas megas de velocidad|maxima velocidad|1000/.test(t)) {
+      return this.generarRespuestaMasVelocidad(catalogo);
     }
 
-    // Consulta de mayor velocidad de internet de casa
-    if (buscaMasVelocidad) {
-      const veloces = catalogo.filter(p => p.tipo === 'hogar').sort((a, b) => (b.velocidadMbps || 0) - (a.velocidadMbps || 0));
-      const p = veloces[0];
-      if (p) {
-        return {
-          id: 'dinamico_mas_velocidad',
-          r: [
-            `El internet más veloz en PlanoClaro es ${p.nombre} de ${p.operador}.`,
-            `Ofrece una velocidad de ${p.velocidadMbps} Mbps simétricos para descargar y transmitir.`,
-            `Su precio regular es de ${PC.util.soles(p.precioRegular)} al mes.`
-          ],
-          accionBoton: { texto: `Comparar ${p.nombre}`, idPlan: p.id },
-          sugiere: ['fibra', 'ping', 'mesh']
-        };
-      }
+    // 6. Consulta por OPERADOR específico ("planes de claro", "que ofrece win", "planes de entel")
+    if (opDetectado && (/planes?|opciones|catalogo|tarifas?|precios?|ofrece|tiene|costos?/.test(t) || t.trim().split(' ').length <= 4)) {
+      return this.generarRespuestaPorOperador(opDetectado.nombre, tipoFiltro, catalogo);
     }
 
     return null;
   },
 
+  /* ── Generador: Respuesta inteligente por PRECIO / PRESUPUESTO ── */
+  generarRespuestaPorPrecio(precio, tipoFiltro, opNombre, cat) {
+    const min = Math.max(15, precio - 8);
+    const max = precio + 8;
+    let candidatos = cat.filter(p => {
+      if (tipoFiltro && p.tipo !== tipoFiltro) return false;
+      if (opNombre && p.operador.toLowerCase() !== opNombre.toLowerCase()) return false;
+      return p.precioRegular >= min && p.precioRegular <= max;
+    });
+
+    candidatos.sort((a, b) => {
+      const diffA = Math.abs(a.precioRegular - precio);
+      const diffB = Math.abs(b.precioRegular - precio);
+      if (diffA !== diffB) return diffA - diffB;
+      return (b.gbAltaVelocidad || b.velocidadMbps || 0) - (a.gbAltaVelocidad || a.velocidadMbps || 0);
+    });
+
+    const moviles = candidatos.filter(p => p.tipo === 'movil');
+    const hogares = candidatos.filter(p => p.tipo === 'hogar');
+
+    const r = [];
+    const filtroOpTxt = opNombre ? ` en ${opNombre}` : '';
+    r.push(`Con un presupuesto de aproximadamente S/ ${precio} al mes${filtroOpTxt}, tienes estas opciones destacadas en el mercado peruano:`);
+
+    if (moviles.length) {
+      r.push('📱 Planes de Celular (Postpago):');
+      moviles.slice(0, 4).forEach(p => {
+        const gbTxt = p.gbAltaVelocidad ? ` con ${p.gbAltaVelocidad} GB` : '';
+        const promoTxt = p.precioPromo ? ` (oferta inicial: S/ ${p.precioPromo.toFixed(2)} por ${p.mesesPromo} meses)` : '';
+        r.push(`• ${p.operador} ${p.nombre}: S/ ${p.precioRegular.toFixed(2)} al mes${gbTxt}${promoTxt}.`);
+      });
+    }
+
+    if (hogares.length) {
+      r.push('🏠 Internet para Casa (Hogar):');
+      hogares.slice(0, 2).forEach(p => {
+        const velTxt = p.velocidadMbps ? ` con ${p.velocidadMbps} Mbps` : '';
+        r.push(`• ${p.operador} ${p.nombre}: S/ ${p.precioRegular.toFixed(2)} al mes${velTxt}.`);
+      });
+    } else if (!tipoFiltro) {
+      const fibraMin = cat.filter(p => p.tipo === 'hogar').sort((a, b) => a.precioRegular - b.precioRegular)[0];
+      if (fibraMin) {
+        r.push(`🏠 ¿Buscas internet para casa? La fibra óptica más accesible arranca en S/ ${fibraMin.precioRegular.toFixed(2)} al mes con ${fibraMin.operador} (${fibraMin.velocidadMbps} Mbps simétricos).`);
+      }
+    }
+
+    // Sugerencia de ahorro económico
+    const masBaratos = cat.filter(p => p.precioRegular < min && (tipoFiltro ? p.tipo === tipoFiltro : p.tipo === 'movil')).sort((a, b) => b.precioRegular - a.precioRegular);
+    if (masBaratos.length) {
+      const mb = masBaratos[0];
+      r.push(`💡 Si deseas pagar menos: Puedes encontrar planes desde S/ ${mb.precioRegular.toFixed(2)} al mes (como ${mb.operador} ${mb.nombre} con ${mb.gbAltaVelocidad || mb.velocidadMbps || ''} ${mb.tipo === 'movil' ? 'GB' : 'Mbps'}).`);
+    }
+
+    r.push('Toca cualquier botón de abajo para agregarlo al comparador y revisar el costo anual transparente a 12 meses.');
+
+    return {
+      id: 'precio_' + precio,
+      r,
+      accionesBotones: candidatos.slice(0, 3).map(p => ({
+        texto: `Comparar ${p.operador} ${p.nombre}`,
+        idPlan: p.id
+      })),
+      sugiere: ['barato_movil', 'barato_hogar', 'permanencia', 'ahorro']
+    };
+  },
+
+  /* ── Generador: Respuesta por VELOCIDAD (Mbps) ── */
+  generarRespuestaPorVelocidad(velocidad, opNombre, cat) {
+    let candidatos = cat.filter(p => p.tipo === 'hogar' && (!opNombre || p.operador.toLowerCase() === opNombre.toLowerCase()));
+    candidatos.sort((a, b) => Math.abs((a.velocidadMbps || 0) - velocidad) - Math.abs((b.velocidadMbps || 0) - velocidad));
+
+    const r = [];
+    r.push(`Buscando internet para casa de aproximadamente ${velocidad} Mbps, te recomiendo estas opciones de fibra óptica:`);
+    candidatos.slice(0, 3).forEach(p => {
+      const promo = p.precioPromo ? ` (oferta a S/ ${p.precioPromo.toFixed(2)} por ${p.mesesPromo} meses)` : '';
+      r.push(`• ${p.operador} ${p.nombre}: ${p.velocidadMbps} Mbps simétricos a S/ ${p.precioRegular.toFixed(2)}/mes${promo}.`);
+    });
+    r.push('💡 Recuerda que por la Ley 31207 de OSIPTEL, la empresa está obligada a garantizarte al menos el 70 % de la velocidad contratada.');
+
+    return {
+      id: 'vel_' + velocidad,
+      r,
+      accionesBotones: candidatos.slice(0, 3).map(p => ({ texto: `Comparar ${p.operador} ${p.nombre}`, idPlan: p.id })),
+      sugiere: ['fibra', 'garantia70', 'ahorro']
+    };
+  },
+
+  /* ── Generador: Respuesta por GIGAS (GB) ── */
+  generarRespuestaPorGigas(gigas, opNombre, cat) {
+    let candidatos = cat.filter(p => p.tipo === 'movil' && (!opNombre || p.operador.toLowerCase() === opNombre.toLowerCase()));
+    candidatos.sort((a, b) => Math.abs((a.gbAltaVelocidad || 0) - gigas) - Math.abs((b.gbAltaVelocidad || 0) - gigas));
+
+    const r = [];
+    r.push(`Para un consumo de alrededor de ${gigas} GB de datos al mes, tienes estas alternativas postpago:`);
+    candidatos.slice(0, 3).forEach(p => {
+      const promo = p.precioPromo ? ` (oferta inicial: S/ ${p.precioPromo.toFixed(2)})` : '';
+      r.push(`• ${p.operador} ${p.nombre}: ${p.gbAltaVelocidad} GB de alta velocidad a S/ ${p.precioRegular.toFixed(2)}/mes${promo}.`);
+    });
+    r.push('💡 Al agotar los gigas rápidos, la mayoría de planes te permite seguir chateando en WhatsApp y apps esenciales a velocidad reducida.');
+
+    return {
+      id: 'gb_' + gigas,
+      r,
+      accionesBotones: candidatos.slice(0, 3).map(p => ({ texto: `Comparar ${p.operador} ${p.nombre}`, idPlan: p.id })),
+      sugiere: ['velocidad', 'compartir', 'medidor']
+    };
+  },
+
+  /* ── Generador: Respuesta por OPERADOR ── */
+  generarRespuestaPorOperador(opNombre, tipoFiltro, cat) {
+    const planesOp = cat.filter(p => p.operador.toLowerCase() === opNombre.toLowerCase() && (!tipoFiltro || p.tipo === tipoFiltro));
+    if (!planesOp.length) return null;
+
+    planesOp.sort((a, b) => a.precioRegular - b.precioRegular);
+
+    const r = [];
+    r.push(`Los planes oficiales de ${opNombre} en PlanoClaro van desde S/ ${planesOp[0].precioRegular.toFixed(2)} hasta S/ ${planesOp[planesOp.length - 1].precioRegular.toFixed(2)} al mes:`);
+
+    planesOp.slice(0, 4).forEach(p => {
+      const detalle = p.tipo === 'movil' ? `${p.gbAltaVelocidad} GB` : `${p.velocidadMbps} Mbps`;
+      const promo = p.precioPromo ? ` (promo inicial S/ ${p.precioPromo.toFixed(2)} por ${p.mesesPromo}m)` : '';
+      r.push(`• ${p.nombre}: S/ ${p.precioRegular.toFixed(2)}/mes con ${detalle}${promo}.`);
+    });
+
+    r.push(`Puedes agregarlos directamente al comparador para revisar su letra pequeña, cobertura y permanencia.`);
+
+    return {
+      id: 'op_' + opNombre.toLowerCase(),
+      r,
+      accionesBotones: planesOp.slice(0, 3).map(p => ({
+        texto: `Comparar ${p.nombre}`,
+        idPlan: p.id
+      })),
+      sugiere: ['barato_movil', 'barato_hogar', 'portabilidad', 'permanencia']
+    };
+  },
+
+  /* ── Generador: Comparativa entre dos operadores ── */
+  generarComparativaOperadores(opA, opB, cat) {
+    const pA = cat.filter(p => p.operador.toLowerCase() === opA);
+    const pB = cat.filter(p => p.operador.toLowerCase() === opB);
+
+    const nombreA = pA[0] ? pA[0].operador : opA.toUpperCase();
+    const nombreB = pB[0] ? pB[0].operador : opB.toUpperCase();
+
+    const minA = pA.length ? Math.min(...pA.map(p => p.precioRegular)) : null;
+    const minB = pB.length ? Math.min(...pB.map(p => p.precioRegular)) : null;
+
+    const r = [
+      `Comparativa directa entre ${nombreA} y ${nombreB}:`,
+      `• ${nombreA}: Planes desde S/ ${minA ? minA.toFixed(2) : '--'} al mes. Destaca por ${pA.some(p => p.tipo === 'movil') ? 'cobertura móvil nacional y paquetes postpago' : 'fibra óptica simétrica para hogar'}.`,
+      `• ${nombreB}: Planes desde S/ ${minB ? minB.toFixed(2) : '--'} al mes. Destaca por ${pB.some(p => p.tipo === 'hogar') ? 'planes de internet y estabilidad' : 'planes accesibles y mayor paquete de datos'}.`,
+      `Recuerda que ante OSIPTEL, la portabilidad entre empresas móviles se realiza en máximo 24 horas y es 100 % gratuita.`,
+      `¿Deseas comparar planes de celular o de internet de casa entre ambos?`
+    ];
+
+    return {
+      id: 'comp_' + opA + '_' + opB,
+      r,
+      sugiere: ['barato_movil', 'barato_hogar', 'portabilidad', 'permanencia']
+    };
+  },
+
+  /* ── Generador: Plan más barato ── */
+  generarRespuestaMasBarato(tipoFiltro, opNombre, catalogo) {
+    if (tipoFiltro === 'movil' || (!tipoFiltro && !opNombre)) {
+      const porRegular = [...catalogo.filter(p => p.tipo === 'movil' && (!opNombre || p.operador.toLowerCase() === opNombre.toLowerCase()))].sort((a, b) => a.precioRegular - b.precioRegular);
+      const pReg = porRegular[0];
+      if (pReg) {
+        return {
+          id: 'dinamico_barato_movil',
+          r: [
+            `El plan de celular más económico es ${pReg.nombre} de ${pReg.operador} a S/ ${pReg.precioRegular.toFixed(2)} al mes con ${pReg.gbAltaVelocidad} GB.`,
+            `En 12 meses pagarás en total S/ ${(pReg.precioRegular * 12).toFixed(2)}. Sin contratos forzosos si contratas solo el chip.`
+          ],
+          accionesBotones: [{ texto: `Comparar ${pReg.nombre}`, idPlan: pReg.id }],
+          sugiere: ['gb', 'operador_bitel', 'permanencia', 'ahorro']
+        };
+      }
+    }
+
+    const porHogar = [...catalogo.filter(p => p.tipo === 'hogar' && (!opNombre || p.operador.toLowerCase() === opNombre.toLowerCase()))].sort((a, b) => a.precioRegular - b.precioRegular);
+    const pHog = porHogar[0];
+    if (pHog) {
+      return {
+        id: 'dinamico_barato_hogar',
+        r: [
+          `El internet para casa más económico es ${pHog.nombre} de ${pHog.operador} a S/ ${pHog.precioRegular.toFixed(2)} al mes con ${pHog.velocidadMbps} Mbps simétricos.`,
+          `En un año suma S/ ${(pHog.precioRegular * 12).toFixed(2)}. Verifica la factibilidad técnica poste por poste en tu zona.`
+        ],
+        accionesBotones: [{ texto: `Comparar ${pHog.nombre}`, idPlan: pHog.id }],
+        sugiere: ['mbps', 'cobertura', 'promocion', 'ahorro']
+      };
+    }
+
+    return null;
+  },
+
+  /* ── Generador: Más Gigas ── */
+  generarRespuestaMasGigas(catalogo) {
+    const conGigas = catalogo.filter(p => p.tipo === 'movil').sort((a, b) => (b.gbAltaVelocidad || 0) - (a.gbAltaVelocidad || 0));
+    const p = conGigas[0];
+    if (!p) return null;
+    return {
+      id: 'dinamico_mas_gigas',
+      r: [
+        `El plan móvil con mayor paquete de datos en PlanoClaro es ${p.nombre} de ${p.operador}.`,
+        `Te brinda ${p.gbAltaVelocidad} GB de alta velocidad por S/ ${p.precioRegular.toFixed(2)} al mes.`,
+        `Total en un año completo: S/ ${PC.costos.anual(p).toFixed(2)}.`
+      ],
+      accionesBotones: [{ texto: `Comparar ${p.nombre}`, idPlan: p.id }],
+      sugiere: ['velocidad', 'compartir', 'medidor']
+    };
+  },
+
+  /* ── Generador: Más Velocidad ── */
+  generarRespuestaMasVelocidad(catalogo) {
+    const veloces = catalogo.filter(p => p.tipo === 'hogar').sort((a, b) => (b.velocidadMbps || 0) - (a.velocidadMbps || 0));
+    const p = veloces[0];
+    if (!p) return null;
+    return {
+      id: 'dinamico_mas_velocidad',
+      r: [
+        `El internet más veloz en PlanoClaro es ${p.nombre} de ${p.operador}.`,
+        `Ofrece una velocidad de ${p.velocidadMbps} Mbps simétricos para descargar y transmitir en 4K.`,
+        `Su precio regular es de S/ ${p.precioRegular.toFixed(2)} al mes.`
+      ],
+      accionesBotones: [{ texto: `Comparar ${p.nombre}`, idPlan: p.id }],
+      sugiere: ['fibra', 'ping', 'mesh']
+    };
+  },
+
+  /* ── 2. Integración Opcional con Google Gemini AI (Gratis) ── */
+  async consultarGemini(pregunta, catalogo) {
+    const key = window.PC_GEMINI_KEY || localStorage.getItem('pc:gemini_key');
+    if (!key) return null;
+
+    try {
+      const resumenCatalogo = catalogo.map(p =>
+        `- ${p.operador} ${p.nombre} (${p.tipo}): regular S/ ${p.precioRegular}/mes${p.precioPromo ? ` (promo S/ ${p.precioPromo} x ${p.mesesPromo}m)` : ''}, ` +
+        (p.tipo === 'movil' ? `${p.gbAltaVelocidad} GB` : `${p.velocidadMbps} Mbps`)
+      ).join('\n');
+
+      const promptSistema = `Eres el Asistente Inteligente de PlanoClaro (comparador ciudadano de planes de celular e internet en Perú, creado por Miguel Armando Gronert Perez en UCSS).
+Responde en lenguaje claro, amigable y muy conciso (2 a 4 párrafos cortos).
+Catálogo oficial de planes en Perú (precios en soles con IGV):
+${resumenCatalogo}
+Normas OSIPTEL clave: portabilidad en 24h gratis, baja en 5 días hábiles, prohibido cortar servicios fines de semana o feriados, velocidad mínima garantizada 70% (Ley 31207), permanencia ilegal sin equipo con descuento.
+Si el usuario pregunta por un precio (ej. 40 soles), menciona los planes exactos que coinciden.`;
+
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${encodeURIComponent(key)}`;
+      const ctrl = new AbortController();
+      const timeout = setTimeout(() => ctrl.abort(), 6000);
+
+      const resp = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: ctrl.signal,
+        body: JSON.stringify({
+          contents: [
+            {
+              role: 'user',
+              parts: [{ text: `${promptSistema}\n\nPregunta: ${pregunta}` }]
+            }
+          ],
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 400
+          }
+        })
+      });
+      clearTimeout(timeout);
+
+      if (!resp.ok) return null;
+      const data = await resp.json();
+      const txt = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!txt) return null;
+
+      const parrafos = txt.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+      return {
+        id: 'gemini_ia',
+        r: parrafos,
+        esGemini: true,
+        sugiere: ['barato_movil', 'barato_hogar', 'permanencia', 'portabilidad']
+      };
+    } catch (e) {
+      return null;
+    }
+  },
+
   buscar(texto) {
     const t = ' ' + this.norm(texto) + ' ';
 
-    // 1. Revisar si es una consulta dinámica del catálogo
-    const dinamico = this.consultarCatalogo(t);
+    // 1. Revisar si es una consulta al catálogo por precio, velocidad, gigas u operador
+    const dinamico = this.consultarCatalogo(this.norm(texto), texto);
     if (dinamico) return dinamico;
 
-    // 2. Búsqueda ponderada en la base de conocimiento
+    // 2. Búsqueda ponderada en la base de conocimiento FAQ
     let mejor = null;
     let maxPuntos = 0;
 
@@ -627,15 +889,15 @@ PC.asistente = {
 
     if (maxPuntos >= 2) return mejor;
 
-    // 3. Respuesta consultiva inteligente para cualquier consulta no clasificada (NUNCA decir "no puedo responder")
+    // 3. Respuesta consultiva inteligente (siempre útil, nunca frustrante)
     return {
       id: 'orientacion_general',
       r: [
-        'Como asesor de telecomunicaciones en el Perú, puedo ayudarte a elegir o solucionar cualquier tema de tu servicio:',
-        '• Encontrar el plan más barato para tu celular o la fibra más rápida para tu casa.',
-        '• Revisar tu recibo para calcular tu ahorro real y detectar cobros indebidos de routers o seguros.',
-        '• Orientarte sobre tus derechos ante OSIPTEL: portabilidad en 24 horas, baja en 5 días o reclamos por velocidad.',
-        '¿Sobre qué operador o duda en específico te gustaría que te guíe?'
+        'Como asesor de telecomunicaciones en el Perú, puedo ayudarte a elegir el mejor plan o solucionar problemas con tu operador:',
+        '• Puedes indicarme un presupuesto (ej: «planes de 40 soles» o «internet de 60 soles»).',
+        '• Preguntarme por un operador en específico (Claro, Movistar, Entel, Bitel, Win, WOW, MiFibra o FiberPro).',
+        '• Consultar tus derechos ante OSIPTEL: portabilidad en 24h, cancelación de plan, o cortes indebidos.',
+        '¿Qué tipo de plan o servicio estás buscando hoy?'
       ],
       sugiere: ['barato_movil', 'barato_hogar', 'portabilidad', 'permanencia', 'ahorro']
     };
@@ -686,10 +948,10 @@ PC.asistente = {
 
     if (lista.length < 4) {
       const defecto = [
+        { texto: '¿Planes de 40 soles?', pregunta: '¿Cuáles son mis opciones por 40 soles?' },
         { texto: '¿Qué es la permanencia?', pregunta: '¿Qué es la permanencia?' },
         { texto: '¿Cómo me cambio de empresa?', pregunta: '¿Cómo me cambio de empresa sin perder mi número?' },
         { texto: '¿Qué pasa si acabo mis GB?', pregunta: '¿Qué pasa cuando se acaban mis GB?' },
-        { texto: '¿Qué es la fibra óptica?', pregunta: '¿Qué ventajas tiene la fibra óptica frente al cable coaxial?' },
         { texto: '¿Cómo reclamo ante OSIPTEL?', pregunta: '¿Cómo pongo un reclamo a mi empresa?' }
       ];
       defecto.forEach(d => {
@@ -704,63 +966,108 @@ PC.asistente = {
     }));
   },
 
-  responder(texto) {
+  async responder(texto) {
     const h = PC.h;
-    texto = String(texto || '').slice(0, 200).trim();
+    texto = String(texto || '').slice(0, 300).trim();
     if (!texto) return;
 
     this.mensaje('yo', h('p', null, texto));
 
-    const demora = PC.mov && PC.mov.reducido() ? 0 : 180;
+    // Comando especial para activar/desactivar Google Gemini AI
+    if (texto.startsWith('/ia')) {
+      const partesComando = texto.split(/\s+/);
+      if (partesComando.length >= 2) {
+        const sub = partesComando[1].trim();
+        if (sub === 'off' || sub === 'desactivar' || sub === 'borrar') {
+          localStorage.removeItem('pc:gemini_key');
+          window.PC_GEMINI_KEY = null;
+          this.mensaje('bot', [
+            h('p', null, 'Modo Google Gemini desactivado. El asistente vuelve al motor local optimizado de PlanoClaro.')
+          ]);
+          return;
+        } else {
+          localStorage.setItem('pc:gemini_key', sub);
+          window.PC_GEMINI_KEY = sub;
+          this.mensaje('bot', [
+            h('p', null, '✨ ¡Google Gemini AI activado con éxito! A partir de ahora tus consultas serán respondidas con Inteligencia Artificial generativa conectada al catálogo de PlanoClaro y normas de OSIPTEL.')
+          ]);
+          return;
+        }
+      } else {
+        this.mensaje('bot', [
+          h('p', null, '✨ ¿Deseas activar Google Gemini AI gratis?'),
+          h('p', null, '1. Consigue tu API Key gratuita en https://aistudio.google.com/'),
+          h('p', null, '2. Escribe en el chat: /ia TU_CLAVE_AQUI para activarlo.'),
+          h('p', null, 'O escribe: /ia off para desactivarlo.')
+        ]);
+        return;
+      }
+    }
+
+    const demora = PC.mov && PC.mov.reducido() ? 0 : 200;
     this.mostrarEscribiendo();
 
-    setTimeout(() => {
-      this.quitarEscribiendo();
+    // Intentar responder con Gemini si está configurado
+    const catalogo = PC.estado && Array.isArray(PC.estado.catalogo) ? PC.estado.catalogo : (window.PLANOCLARO_DATA ? window.PLANOCLARO_DATA.planes : []);
+    let f = null;
 
-      const f = this.buscar(texto);
-      const partes = f.r.map(x => h('p', null, x));
+    if (window.PC_GEMINI_KEY || localStorage.getItem('pc:gemini_key')) {
+      f = await this.consultarGemini(texto, catalogo);
+    }
 
-      // Acciones y enlaces interactivos
-      const acciones = [];
-      if (f.enlace) {
-        acciones.push(PC.enlaceExterno(f.enlace[0], f.enlace[1], 'btn-accion-chat'));
-      }
-      if (f.accion === 'medidor') {
-        const btnMed = h('button', { type: 'button', class: 'btn-accion-chat', dataset: { ir: 'medidor' } }, 'Abrir guía «Medir mi consumo»');
-        acciones.push(btnMed);
-      }
-      if (f.accion === 'ahorro') {
-        const btnAhorro = h('button', { type: 'button', class: 'btn-accion-chat', dataset: { ir: 'ahorro' } }, 'Abrir Calculadora de ahorro');
-        acciones.push(btnAhorro);
-      }
-      if (f.accion === 'reclamos') {
-        const btnRec = h('button', { type: 'button', class: 'btn-accion-chat', dataset: { ir: 'reclamos' } }, 'Generar solicitud formal OSIPTEL');
-        acciones.push(btnRec);
-      }
-      if (f.accion === 'glosario') {
-        const btnGlo = h('button', { type: 'button', class: 'btn-accion-chat', dataset: { ir: 'glosario' } }, 'Ver Glosario en lenguaje claro');
-        acciones.push(btnGlo);
-      }
-      if (f.accionBoton && f.accionBoton.idPlan) {
-        const btnComp = h('button', { type: 'button', class: 'btn-accion-chat', dataset: { comp: f.accionBoton.idPlan } }, f.accionBoton.texto);
-        acciones.push(btnComp);
-      }
-      if (String(f.accion || '').startsWith('catalogo_')) {
-        const op = f.accion.replace('catalogo_', '');
-        const btnServ = h('button', { type: 'button', class: 'btn-accion-chat', dataset: { ir: 'inicio' } }, `Ver planes de ${op.toUpperCase()}`);
-        acciones.push(btnServ);
-      }
+    // Si Gemini no está activo o falló, usar el motor semántico local
+    if (!f) {
+      await new Promise(r => setTimeout(r, demora));
+      f = this.buscar(texto);
+    }
 
-      if (acciones.length) {
-        partes.push(h('div', { class: 'msj-acciones' }, acciones));
-      }
+    this.quitarEscribiendo();
 
-      this.mensaje('bot', partes);
-      PC.metricas.registrar('chat', { faq: f.id });
+    const partes = f.r.map(x => h('p', null, x));
 
-      // Actualizar sugerencias contextuales
-      this.actualizarSugerencias(f.sugiere || ['barato_movil', 'permanencia', 'portabilidad']);
-    }, demora);
+    if (f.esGemini) {
+      partes.unshift(h('span', { class: 'tag-gemini-chat' }, '✨ Google Gemini AI'));
+    }
+
+    // Acciones y botones interactivos
+    const acciones = [];
+    if (f.enlace) {
+      acciones.push(PC.enlaceExterno(f.enlace[0], f.enlace[1], 'btn-accion-chat'));
+    }
+    if (f.accion === 'medidor') {
+      acciones.push(h('button', { type: 'button', class: 'btn-accion-chat', dataset: { ir: 'medidor' } }, 'Abrir guía «Medir mi consumo»'));
+    }
+    if (f.accion === 'ahorro') {
+      acciones.push(h('button', { type: 'button', class: 'btn-accion-chat', dataset: { ir: 'ahorro' } }, 'Abrir Calculadora de ahorro'));
+    }
+    if (f.accion === 'reclamos') {
+      acciones.push(h('button', { type: 'button', class: 'btn-accion-chat', dataset: { ir: 'reclamos' } }, 'Generar solicitud formal OSIPTEL'));
+    }
+    if (f.accion === 'glosario') {
+      acciones.push(h('button', { type: 'button', class: 'btn-accion-chat', dataset: { ir: 'glosario' } }, 'Ver Glosario en lenguaje claro'));
+    }
+    if (f.accionBoton && f.accionBoton.idPlan) {
+      acciones.push(h('button', { type: 'button', class: 'btn-accion-chat', dataset: { comp: f.accionBoton.idPlan } }, f.accionBoton.texto));
+    }
+    if (f.accionesBotones && Array.isArray(f.accionesBotones)) {
+      f.accionesBotones.forEach(b => {
+        acciones.push(h('button', { type: 'button', class: 'btn-accion-chat', dataset: { comp: b.idPlan } }, b.texto));
+      });
+    }
+    if (String(f.accion || '').startsWith('catalogo_')) {
+      const op = f.accion.replace('catalogo_', '');
+      acciones.push(h('button', { type: 'button', class: 'btn-accion-chat', dataset: { ir: 'inicio' } }, `Ver planes de ${op.toUpperCase()}`));
+    }
+
+    if (acciones.length) {
+      partes.push(h('div', { class: 'msj-acciones' }, acciones));
+    }
+
+    this.mensaje('bot', partes);
+    PC.metricas.registrar('chat', { faq: f.id });
+
+    // Actualizar sugerencias contextuales
+    this.actualizarSugerencias(f.sugiere || ['barato_movil', 'permanencia', 'portabilidad']);
   },
 
   reiniciar() {

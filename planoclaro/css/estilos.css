@@ -362,6 +362,7 @@ legend:focus{outline:none}
 .btn-accion-chat{font:inherit;font-size:.9rem;font-weight:600;padding:.4rem .8rem;border-radius:999px;background:var(--fondo);color:var(--tinta);border:1px solid var(--linea-fuerte);cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;text-decoration:none;transition:background-color var(--d-ui) var(--ease-out),transform var(--d-press) var(--ease-out)}
 .btn-accion-chat:hover{background:var(--blanco)}
 .btn-accion-chat:active{transform:scale(.96)}
+.tag-gemini-chat{display:inline-block;font-size:.78rem;font-weight:700;color:#1a73e8;background:#e8f0fe;border-radius:999px;padding:.2rem .65rem;margin-bottom:.45rem;border:1px solid #d2e3fc}
 .msj--escribiendo{display:inline-flex;align-items:center;gap:5px;padding:.65rem .95rem;background:#fff;border:1px solid var(--linea);border-radius:18px;border-bottom-left-radius:6px;align-self:flex-start;box-shadow:0 2px 6px -3px rgba(11,11,12,.08)}
 .punto-escribiendo{width:6px;height:6px;border-radius:50%;background:var(--tinta-2);animation:pulsoPunto 900ms infinite ease-in-out}
 .punto-escribiendo:nth-child(2){animation-delay:150ms}
