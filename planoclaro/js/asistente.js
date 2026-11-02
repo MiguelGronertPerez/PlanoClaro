@@ -801,62 +801,89 @@ PC.asistente = {
     };
   },
 
-  /* ── 2. Integración Opcional con Google Gemini AI (Gratis) ── */
+  /* ── 2. Integración con Google Gemini AI (Servidor Seguro + Local) ── */
   async consultarGemini(pregunta, catalogo) {
-    const key = window.PC_GEMINI_KEY || localStorage.getItem('pc:gemini_key');
-    if (!key) return null;
-
+    // 1. Intentar endpoint seguro del servidor (/api/asistente) donde la clave está 100% protegida y oculta
     try {
-      const resumenCatalogo = catalogo.map(p =>
-        `- ${p.operador} ${p.nombre} (${p.tipo}): regular S/ ${p.precioRegular}/mes${p.precioPromo ? ` (promo S/ ${p.precioPromo} x ${p.mesesPromo}m)` : ''}, ` +
-        (p.tipo === 'movil' ? `${p.gbAltaVelocidad} GB` : `${p.velocidadMbps} Mbps`)
-      ).join('\n');
-
-      const promptSistema = `Eres el Asistente Inteligente de PlanoClaro (comparador ciudadano de planes de celular e internet en Perú, creado por Miguel Armando Gronert Perez en UCSS).
-Responde en lenguaje claro, amigable y muy conciso (2 a 4 párrafos cortos).
-Catálogo oficial de planes en Perú (precios en soles con IGV):
-${resumenCatalogo}
-Normas OSIPTEL clave: portabilidad en 24h gratis, baja en 5 días hábiles, prohibido cortar servicios fines de semana o feriados, velocidad mínima garantizada 70% (Ley 31207), permanencia ilegal sin equipo con descuento.
-Si el usuario pregunta por un precio (ej. 40 soles), menciona los planes exactos que coinciden.`;
-
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${encodeURIComponent(key)}`;
       const ctrl = new AbortController();
-      const timeout = setTimeout(() => ctrl.abort(), 6000);
-
-      const resp = await fetch(endpoint, {
+      const timeout = setTimeout(() => ctrl.abort(), 8000);
+      const resp = await fetch('/api/asistente', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         signal: ctrl.signal,
         body: JSON.stringify({
-          contents: [
-            {
-              role: 'user',
-              parts: [{ text: `${promptSistema}\n\nPregunta: ${pregunta}` }]
-            }
-          ],
-          generationConfig: {
-            temperature: 0.3,
-            maxOutputTokens: 400
-          }
+          pregunta,
+          catalogo: (catalogo || []).slice(0, 30).map(p => ({
+            id: p.id,
+            operador: p.operador,
+            nombre: p.nombre,
+            tipo: p.tipo,
+            precioRegular: p.precioRegular,
+            precioPromo: p.precioPromo,
+            mesesPromo: p.mesesPromo,
+            gbAltaVelocidad: p.gbAltaVelocidad,
+            velocidadMbps: p.velocidadMbps
+          }))
         })
       });
       clearTimeout(timeout);
 
-      if (!resp.ok) return null;
-      const data = await resp.json();
-      const txt = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (!txt) return null;
-
-      const parrafos = txt.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
-      return {
-        id: 'gemini_ia',
-        r: parrafos,
-        esGemini: true,
-        sugiere: ['barato_movil', 'barato_hogar', 'permanencia', 'portabilidad']
-      };
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data.parrafos && data.parrafos.length) {
+          return {
+            id: 'gemini_ia_server',
+            r: data.parrafos,
+            accionesBotones: data.botones || [],
+            esGemini: true,
+            sugiere: ['barato_movil', 'barato_hogar', 'permanencia', 'portabilidad']
+          };
+        }
+      }
     } catch (e) {
-      return null;
+      // Fallback local silencioso si no hay servidor disponible o en file://
     }
+
+    // 2. Si hay clave configurada en localStorage o global para modo local directo
+    const key = window.PC_GEMINI_KEY || localStorage.getItem('pc:gemini_key');
+    if (key) {
+      try {
+        const resumenCatalogo = catalogo.map(p =>
+          `- ${p.operador} ${p.nombre} (${p.tipo}): regular S/ ${p.precioRegular}/mes, ` +
+          (p.tipo === 'movil' ? `${p.gbAltaVelocidad} GB` : `${p.velocidadMbps} Mbps`)
+        ).join('\n');
+
+        const promptSistema = `Eres el Asistente Inteligente de PlanoClaro (Perú). Responde en lenguaje claro, amigable y muy conciso (máximo 3 párrafos cortos).\nCatálogo:\n${resumenCatalogo}`;
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${encodeURIComponent(key)}`;
+        const ctrl2 = new AbortController();
+        const timeout2 = setTimeout(() => ctrl2.abort(), 6500);
+
+        const resp2 = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          signal: ctrl2.signal,
+          body: JSON.stringify({
+            contents: [{ role: 'user', parts: [{ text: `${promptSistema}\n\nPregunta: ${pregunta}` }] }],
+            generationConfig: { temperature: 0.25, maxOutputTokens: 400 }
+          })
+        });
+        clearTimeout(timeout2);
+        if (resp2.ok) {
+          const d = await resp2.json();
+          const txt = d?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (txt) {
+            return {
+              id: 'gemini_ia_direct',
+              r: txt.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean),
+              esGemini: true,
+              sugiere: ['barato_movil', 'barato_hogar', 'permanencia', 'portabilidad']
+            };
+          }
+        }
+      } catch (err) {}
+    }
+
+    return null;
   },
 
   buscar(texto) {
@@ -1007,13 +1034,9 @@ Si el usuario pregunta por un precio (ej. 40 soles), menciona los planes exactos
     const demora = PC.mov && PC.mov.reducido() ? 0 : 200;
     this.mostrarEscribiendo();
 
-    // Intentar responder con Gemini si está configurado
+    // Intentar responder con Google Gemini AI (vía servidor seguro /api/asistente o clave directa)
     const catalogo = PC.estado && Array.isArray(PC.estado.catalogo) ? PC.estado.catalogo : (window.PLANOCLARO_DATA ? window.PLANOCLARO_DATA.planes : []);
-    let f = null;
-
-    if (window.PC_GEMINI_KEY || localStorage.getItem('pc:gemini_key')) {
-      f = await this.consultarGemini(texto, catalogo);
-    }
+    let f = await this.consultarGemini(texto, catalogo);
 
     // Si Gemini no está activo o falló, usar el motor semántico local
     if (!f) {

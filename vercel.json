@@ -8,6 +8,10 @@
       "destination": "/planoclaro/index.html"
     },
     {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
       "source": "/(.*)",
       "destination": "/planoclaro/$1"
     }
