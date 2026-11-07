@@ -669,5 +669,486 @@ html{overflow-x:clip}
 .login__cabeza-google{text-align:center;margin-bottom:1.4rem}
 .login__cabeza-google .ico--google{width:2.4rem;height:2.4rem;margin-bottom:.5rem}
 
+/* ==============================================================
+   OPTIMIZACIONES DE RENDIMIENTO PARA CELULARES GAMA MEDIA/BAJA
+   ============================================================== */
+@media (max-width: 768px) {
+  .cabecera, .panel, .opcion, .ticket, .paso, .pregunta, .plan, .tarjeta-termino, .menu-desplegable__panel {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background-color: #ffffff !important;
+  }
+  .cabecera {
+    background-color: #f2f3f5 !important;
+  }
+}
+
+/* ==============================================================
+   ARQUITECTURA DE INFORMACIÓN, NAVEGACIÓN Y FILTROS RÁPIDOS (1-2 PASOS)
+   ============================================================== */
+.migas {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .5rem;
+  font-size: .88rem;
+  color: var(--tinta-3);
+  margin-bottom: 1rem;
+}
+.migas__enlace {
+  color: var(--tinta);
+  font-weight: 600;
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+}
+.migas__separador {
+  color: var(--tinta-3);
+  user-select: none;
+}
+
+.barra-confianza {
+  background: #f0fdf4;
+  border: 1px solid rgba(16,185,129,.35);
+  border-radius: 12px;
+  padding: .75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  margin-bottom: 1.2rem;
+  font-size: .92rem;
+  color: #065f46;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.barra-confianza .ico {
+  width: 1.35em;
+  height: 1.35em;
+  flex-shrink: 0;
+  stroke: #10b981;
+}
+
+.barra-filtros {
+  background: #ffffff;
+  border: 1px solid var(--linea);
+  border-radius: 18px;
+  padding: 1.1rem;
+  margin-bottom: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: var(--sombra-1);
+}
+.barra-filtros__busqueda {
+  display: flex;
+  gap: .5rem;
+  position: relative;
+}
+.barra-filtros__input {
+  width: 100%;
+  padding: .75rem 1rem;
+  border-radius: 12px;
+  border: 1.5px solid var(--linea);
+  font: inherit;
+  font-size: .95rem;
+  color: var(--tinta);
+  background: #fafafa;
+  transition: all var(--d-ui) var(--ease-out);
+}
+.barra-filtros__input:focus {
+  outline: none;
+  border-color: var(--tinta);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(11,11,12,.08);
+}
+.barra-filtros__grupos {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+.filtro-chip-grupo {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  flex-wrap: wrap;
+}
+.filtro-chip-etq {
+  font-size: .8rem;
+  font-weight: 750;
+  color: var(--tinta-2);
+  text-transform: uppercase;
+  margin-right: .3rem;
+  min-width: 80px;
+}
+.filtro-chip {
+  font: inherit;
+  font-size: .85rem;
+  font-weight: 600;
+  padding: .35rem .75rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--linea);
+  background: #ffffff;
+  color: var(--tinta-2);
+  cursor: pointer;
+  transition: all var(--d-ui) var(--ease-out);
+}
+.filtro-chip:hover {
+  background: #f4f6f9;
+  border-color: var(--tinta-2);
+}
+.filtro-chip--activo {
+  background: var(--tinta) !important;
+  color: #ffffff !important;
+  border-color: var(--tinta) !important;
+}
+.barra-filtros__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .6rem;
+  font-size: .88rem;
+  color: var(--tinta-2);
+  border-top: 1px solid var(--linea);
+  padding-top: .75rem;
+}
+.orden-select {
+  font: inherit;
+  font-size: .85rem;
+  font-weight: 600;
+  border: 1.5px solid var(--linea);
+  border-radius: 8px;
+  padding: .35rem .6rem;
+  color: var(--tinta);
+  background: #ffffff;
+}
+
+/* ==============================================================
+   ZERO-STATE ASISTIDO (CUANDO NO HAY RESULTADOS CON LOS FILTROS)
+   ============================================================== */
+.sin-resultados {
+  background: #ffffff;
+  border: 2px dashed rgba(11,11,12,.2);
+  border-radius: 20px;
+  padding: 2.2rem 1.5rem;
+  text-align: center;
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.sin-resultados__icono {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #b91c1c;
+  display: grid;
+  place-items: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+.sin-resultados__titulo {
+  font-size: 1.35rem;
+  color: var(--tinta);
+  margin: 0;
+}
+.sin-resultados__texto {
+  font-size: .98rem;
+  color: var(--tinta-2);
+  max-width: 52ch;
+  line-height: 1.5;
+  margin: 0;
+}
+.sin-resultados__sugerencias {
+  background: #f8fafc;
+  border: 1px solid var(--linea);
+  border-radius: 12px;
+  padding: 1rem 1.4rem;
+  text-align: left;
+  max-width: 480px;
+  width: 100%;
+}
+.sin-resultados__sugerencias h4 {
+  font-size: .88rem;
+  text-transform: uppercase;
+  color: var(--tinta-2);
+  margin-bottom: .5rem;
+}
+.sin-resultados__sugerencias ul {
+  padding-left: 1.2rem;
+  margin: 0;
+  font-size: .9rem;
+  color: var(--tinta);
+  line-height: 1.5;
+}
+.sin-resultados__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .8rem;
+  justify-content: center;
+  margin-top: .5rem;
+}
+
+/* ==============================================================
+   PRINCIPIOS VISUALES SEMANA 12 (JERARQUÍA, PRECIO IGV Y CONTRASTE)
+   ============================================================== */
+.sello--igv {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid rgba(16,185,129,.4);
+  font-weight: 700;
+  font-size: .82rem;
+  padding: .2rem .55rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+}
+.plan__precio-destacado {
+  font-size: clamp(2.2rem, 3.8vw, 2.9rem) !important;
+  font-weight: 800 !important;
+  color: var(--tinta) !important;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.05;
+}
+.plan__cta-principal {
+  background: var(--tinta) !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 700 !important;
+  padding: .85rem 1.2rem !important;
+  border-radius: 12px !important;
+  cursor: pointer;
+  transition: opacity var(--d-ui) var(--ease-out);
+}
+.plan__cta-principal:hover {
+  opacity: .88;
+}
+.badge-ahorro {
+  background: #1b7a43;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: .78rem;
+  padding: .2rem .5rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: .4rem;
+}
+
+/* ==============================================================
+   PALETAS DE COLOR INTERACTIVAS Y TEMAS PERSONALIZABLES
+   ============================================================== */
+:root, [data-tema="monocromo"] {
+  --acento: #0b0b0c;
+  --acento-hover: #2a2b2e;
+  --acento-suave: rgba(11, 11, 12, 0.08);
+  --acento-borde: rgba(11, 11, 12, 0.22);
+  --acento-gradiente: linear-gradient(135deg, #0b0b0c 0%, #36373a 100%);
+  --foco: #0b0b0c;
+}
+
+[data-tema="azul"] {
+  --acento: #1d4ed8;
+  --acento-hover: #1e40af;
+  --acento-suave: rgba(29, 78, 216, 0.1);
+  --acento-borde: rgba(29, 78, 216, 0.35);
+  --acento-gradiente: linear-gradient(135deg, #1d4ed8 0%, #0284c7 100%);
+  --foco: #1d4ed8;
+}
+
+[data-tema="esmeralda"] {
+  --acento: #047857;
+  --acento-hover: #065f46;
+  --acento-suave: rgba(4, 120, 87, 0.1);
+  --acento-borde: rgba(4, 120, 87, 0.35);
+  --acento-gradiente: linear-gradient(135deg, #047857 0%, #10b981 100%);
+  --foco: #047857;
+}
+
+[data-tema="purpura"] {
+  --acento: #6d28d9;
+  --acento-hover: #5b21b6;
+  --acento-suave: rgba(109, 40, 217, 0.1);
+  --acento-borde: rgba(109, 40, 217, 0.35);
+  --acento-gradiente: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
+  --foco: #6d28d9;
+}
+
+[data-tema="terracota"] {
+  --acento: #c2410c;
+  --acento-hover: #9a3412;
+  --acento-suave: rgba(194, 65, 12, 0.1);
+  --acento-borde: rgba(194, 65, 12, 0.35);
+  --acento-gradiente: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
+  --foco: #c2410c;
+}
+
+/* Aplicación del acento activo en elementos clave */
+.boton--primario {
+  background: var(--acento) !important;
+  color: #fff !important;
+  transition: all var(--d-ui) var(--ease-out);
+}
+.boton--primario:hover {
+  background: var(--acento-hover) !important;
+}
+.filtro-chip--activo {
+  background: var(--acento) !important;
+  border-color: var(--acento) !important;
+  color: #fff !important;
+}
+.progreso__barra {
+  background: var(--acento-gradiente) !important;
+}
+.marca:hover .marca__pulso {
+  fill: var(--acento) !important;
+}
+.accion--solida {
+  background: var(--acento) !important;
+  color: #fff !important;
+  border-color: var(--acento) !important;
+}
+.plan__cta-principal {
+  background: var(--acento) !important;
+}
+
+/* Selector de color interactivo */
+.paleta-personalizar {
+  background: #ffffff;
+  border: 1px solid var(--linea);
+  border-radius: 14px;
+  padding: .6rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .8rem;
+  margin-top: 1.2rem;
+  box-shadow: var(--sombra-1);
+}
+.paleta-personalizar__titulo {
+  font-size: .86rem;
+  font-weight: 700;
+  color: var(--tinta-2);
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+}
+.paleta-personalizar__punto {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--acento);
+  display: inline-block;
+  transition: background var(--d-ui) var(--ease-out);
+}
+.paleta-personalizar__botones {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.selector-color {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  outline: 1.5px solid rgba(11,11,12,.18);
+  outline-offset: 1px;
+  cursor: pointer;
+  padding: 0;
+  transition: all var(--d-ui) var(--ease-out);
+}
+.selector-color:hover {
+  transform: scale(1.18);
+}
+.selector-color--activo {
+  outline: 2.5px solid var(--tinta) !important;
+  outline-offset: 2px !important;
+  transform: scale(1.15);
+}
+.selector-color--monocromo { background: #0b0b0c; }
+.selector-color--azul { background: #1d4ed8; }
+.selector-color--esmeralda { background: #047857; }
+.selector-color--purpura { background: #6d28d9; }
+.selector-color--terracota { background: #c2410c; }
+
+/* Identidad visual por operador en tarjetas de planes */
+.plan[data-operador="Claro"] { border-top: 4px solid #dc2626 !important; }
+.plan[data-operador="Movistar"] { border-top: 4px solid #0284c7 !important; }
+.plan[data-operador="Entel"] { border-top: 4px solid #2563eb !important; }
+.plan[data-operador="Bitel"] { border-top: 4px solid #d97706 !important; }
+.plan[data-operador="Win"] { border-top: 4px solid #ea580c !important; }
+.plan[data-operador="WOW"] { border-top: 4px solid #7c3aed !important; }
+.plan[data-operador="MiFibra"] { border-top: 4px solid #059669 !important; }
+.plan[data-operador="FiberPro"] { border-top: 4px solid #0891b2 !important; }
+
+.chip-operador {
+  font-size: .78rem;
+  font-weight: 750;
+  padding: .2rem .55rem;
+  border-radius: 6px;
+  display: inline-block;
+  margin-right: .35rem;
+  letter-spacing: .02em;
+}
+.chip-operador--claro { background: #fee2e2; color: #b91c1c; border: 1px solid rgba(220,38,38,.3); }
+.chip-operador--movistar { background: #e0f2fe; color: #0369a1; border: 1px solid rgba(2,132,199,.3); }
+.chip-operador--entel { background: #dbeafe; color: #1d4ed8; border: 1px solid rgba(37,99,235,.3); }
+.chip-operador--bitel { background: #fef3c7; color: #b45309; border: 1px solid rgba(217,119,6,.3); }
+.chip-operador--win { background: #ffedd5; color: #c2410c; border: 1px solid rgba(234,88,12,.3); }
+.chip-operador--wow { background: #ede9fe; color: #6d28d9; border: 1px solid rgba(124,58,237,.3); }
+.chip-operador--mifibra { background: #d1fae5; color: #047857; border: 1px solid rgba(5,150,105,.3); }
+.chip-operador--fiberpro { background: #cffafe; color: #0e7490; border: 1px solid rgba(8,145,178,.3); }
+
+/* Mejoras visuales en las dos puertas de servicio (Inicio) */
+.servicio[data-servicio="movil"] {
+  border-left: 4.5px solid #2563eb;
+  background: linear-gradient(135deg, rgba(255,255,255,.94) 0%, rgba(219,234,254,.38) 100%);
+}
+.servicio[data-servicio="hogar"] {
+  border-left: 4.5px solid #047857;
+  background: linear-gradient(135deg, rgba(255,255,255,.94) 0%, rgba(209,250,229,.38) 100%);
+}
+.servicio:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-2);
+}
+
+/* Banners gráficos con acento visual en módulos */
+.banner-modulo-visual {
+  background: linear-gradient(135deg, #ffffff 0%, var(--acento-suave) 100%);
+  border: 1px solid var(--acento-borde);
+  border-radius: 18px;
+  padding: 1.2rem 1.6rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  box-shadow: var(--sombra-1);
+}
+.banner-modulo-visual__txt h3 {
+  font-size: 1.2rem;
+  color: var(--tinta);
+  margin-bottom: .25rem;
+}
+.banner-modulo-visual__txt p {
+  font-size: .92rem;
+  color: var(--tinta-2);
+}
+.banner-modulo-visual__grafico {
+  font-size: 2.4rem;
+  flex-shrink: 0;
+}
+
+
+
 
 

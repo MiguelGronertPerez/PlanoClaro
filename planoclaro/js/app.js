@@ -39,11 +39,35 @@
     usarMedido(gb) { estado.gbMedido = gb; PC.almacen.guardarPerfil({ ...(estado.perfil || {}), tipo: 'movil', gbMedido: gb, respuestas: estado.respuestas, fecha: Date.now() }).catch(() => {}); PC.avisar(`Guardamos ${gb} GB. Ahora responde el cuestionario.`); iniciarCuestionario('movil'); },
     usarPerfil(p) { if (!p) return; estado.respuestas = p.respuestas || {}; estado.gbMedido = p.gbMedido || null; estado.tipo = p.tipo; iniciarCuestionario(p.tipo); }
   };
+  PC.tema = {
+    aplicar(id) {
+      document.body.dataset.tema = id;
+      document.documentElement.dataset.tema = id;
+      try { localStorage.setItem('pc_tema', id); } catch (e) {}
+      document.querySelectorAll('[data-selector-tema]').forEach(b => {
+        const activo = b.dataset.selectorTema === id;
+        b.classList.toggle('selector-color--activo', activo);
+        b.setAttribute('aria-pressed', String(activo));
+      });
+      const nombres = { monocromo: 'Monocromo Pro', azul: 'Azul Andino', esmeralda: 'Esmeralda Ahorro', purpura: 'Púrpura Tech', terracota: 'Terracota Andino' };
+      if (PC.avisar) PC.avisar(`Paleta de color: ${nombres[id] || id}`);
+    },
+    iniciar() {
+      const guardado = (function() { try { return localStorage.getItem('pc_tema'); } catch(e) { return null; } })() || 'monocromo';
+      this.aplicar(guardado);
+    }
+  };
+
   // Eventos delegados (sin atributos on* en el HTML).
   document.addEventListener('click', async e => {
-    const t = e.target.closest('[data-ir],[data-servicio],[data-fav],[data-comp],[data-ics],[data-quitar],[data-elegir-plan],#btn-sonido');
+    const t = e.target.closest('[data-ir],[data-servicio],[data-fav],[data-comp],[data-ics],[data-quitar],[data-elegir-plan],[data-selector-tema],#btn-sonido');
     if (!t) return;
     if (t.id === 'btn-sonido') { PC.sonido.alternar(); return; }
+    if (t.dataset.selectorTema) {
+      PC.tema.aplicar(t.dataset.selectorTema);
+      if (PC.sonido) PC.sonido.tocar('elegir');
+      return;
+    }
     if (t.dataset.servicio) { PC.sonido.tocar('elegir'); iniciarCuestionario(t.dataset.servicio); return; }
     if (t.dataset.elegirPlan) {
       const plan = estado.catalogo.find(x => x.id === t.dataset.elegirPlan);
@@ -55,7 +79,30 @@
       }
       return;
     }
-    if (t.dataset.ir) { e.preventDefault(); const panel = document.getElementById('asistente'); if (!panel.hidden && panel.contains(t)) document.getElementById('cerrar-asistente').click(); mostrar(t.dataset.ir); return; }
+    if (t.dataset.ir) {
+      e.preventDefault();
+      const irA = t.dataset.ir;
+      if (irA === 'catalogo-directo') {
+        estado.tipo = estado.tipo || 'movil';
+        PC.vista.render(estado.tipo, {
+          necesidad: { gb: 30, mbps: 100 },
+          presupuestoRelajado: false,
+          opciones: estado.catalogo.filter(p => p.tipo === estado.tipo).slice(0, 6).map((plan, i) => ({
+            plan,
+            clave: i === 0 ? 'eco' : (i === 1 ? 'eq' : 'alto'),
+            titulo: plan.nombre
+          })),
+          descartados: [],
+          esCatalogoDirecto: true
+        });
+        mostrar('resultados', 't-resultados');
+        return;
+      }
+      const panel = document.getElementById('asistente');
+      if (!panel.hidden && panel.contains(t)) document.getElementById('cerrar-asistente').click();
+      mostrar(irA);
+      return;
+    }
     if (t.dataset.fav) {
       const on = await PC.favoritos.alternar(t.dataset.fav);
       document.querySelectorAll(`[data-fav="${CSS.escape(t.dataset.fav)}"]`).forEach(b => b.setAttribute('aria-pressed', String(on)));
@@ -99,7 +146,7 @@
   document.getElementById('consent-no').addEventListener('click', () => decidir('no'));
 
   document.body.dataset.vista = 'inicio';
-  PC.hidratarIconos(); PC.sonido.pintar(); PC.carrito.pintarContador(); PC.accesibilidad.iniciar(); PC.asistente.iniciar();
+  PC.hidratarIconos(); PC.sonido.pintar(); PC.carrito.pintarContador(); PC.accesibilidad.iniciar(); PC.asistente.iniciar(); PC.tema.iniciar();
   PC.mov.inclinarTodo(document.getElementById('vista-inicio')); PC.mov.revelar();
   // Three.js (650 KB) se carga después del primer pintado: el contenido no espera a la decoración.
   const cargar3d = () => {

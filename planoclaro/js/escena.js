@@ -20,8 +20,8 @@ PC.escena = {
         h('p', { class: 'ticket__verif' }, PC.vista.sello(p.verificacion.precio, true)));
     });
     const pila = h('div', { class: 'pila' }, tickets.slice().reverse());
-    PC.vaciar(raiz, pila, h('figcaption', { class: 'escena__nota' }, `Ejemplos reales del catálogo (revisado el ${PC.util.fecha(fechaConsulta)}). La oferta es lo primero que ves; el total de 12 meses es lo que pagas.`));
-    raiz.setAttribute('aria-label', 'Ejemplo: ' + ej.map(p => `${p.operador} ${p.nombre}, ${s(c.anual(p))} en 12 meses`).join('; '));
+    PC.vaciar(raiz, pila, h('figcaption', { class: 'escena__nota' }, `Planes vigentes del catálogo oficial (verificados al ${PC.util.fecha(fechaConsulta)}). La oferta es lo primero que ves; el total de 12 meses es lo que pagas de verdad.`));
+    raiz.setAttribute('aria-label', 'Planes vigentes del catálogo: ' + ej.map(p => `${p.operador} ${p.nombre}, ${s(c.anual(p))} en 12 meses`).join('; '));
     requestAnimationFrame(() => raiz.classList.add('escena--lista'));
     if (PC.mov.reducido() || !PC.mov.finoHover()) return;
     const r = PC.mov.resorte((x, y) => { pila.style.transform = `rotateX(${x.toFixed(2)}deg) rotateY(${y.toFixed(2)}deg)`; });

@@ -5,6 +5,10 @@
 (function () {
   var d = document, raiz = d.documentElement;
   raiz.classList.add('js');
+  try {
+    var t = localStorage.getItem('pc_tema') || 'monocromo';
+    raiz.dataset.tema = t;
+  } catch (e) {}
   if (location.protocol === 'file:') {
     var s = d.createElement('script'); s.src = 'vendor/bricolage-grotesque/fuente-file.js'; d.head.appendChild(s);
   } else {

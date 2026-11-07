@@ -1,11 +1,11 @@
 {
  "index.html": {
-  "palabras": 509,
-  "frases": 60,
-  "palabras_por_frase": 8.5,
-  "silabas_por_palabra": 2.08,
-  "fernandez_huerta": 73.4,
-  "inflesz": 68.7
+  "palabras": 658,
+  "frases": 79,
+  "palabras_por_frase": 8.3,
+  "silabas_por_palabra": 2.1,
+  "fernandez_huerta": 72.2,
+  "inflesz": 67.6
  },
  "js/preguntas.js": {
   "palabras": 288,
@@ -16,20 +16,20 @@
   "inflesz": 84.8
  },
  "js/asistente.js": {
-  "palabras": 2106,
-  "frases": 226,
-  "palabras_por_frase": 9.3,
-  "silabas_por_palabra": 1.98,
-  "fernandez_huerta": 78.6,
-  "inflesz": 74.3
+  "palabras": 2267,
+  "frases": 246,
+  "palabras_por_frase": 9.2,
+  "silabas_por_palabra": 2.0,
+  "fernandez_huerta": 77.1,
+  "inflesz": 72.7
  },
  "js/vista-resultados.js": {
-  "palabras": 352,
-  "frases": 64,
-  "palabras_por_frase": 5.5,
-  "silabas_por_palabra": 2.06,
-  "fernandez_huerta": 77.7,
-  "inflesz": 73.0
+  "palabras": 573,
+  "frases": 96,
+  "palabras_por_frase": 6.0,
+  "silabas_por_palabra": 2.08,
+  "fernandez_huerta": 76.2,
+  "inflesz": 71.6
  },
  "js/medidor.js": {
   "palabras": 139,
@@ -56,11 +56,11 @@
   "inflesz": 66.0
  },
  "TOTAL": {
-  "palabras": 3478,
-  "frases": 435,
-  "palabras_por_frase": 8.0,
-  "silabas_por_palabra": 1.99,
-  "fernandez_huerta": 79.1,
-  "inflesz": 74.7
+  "palabras": 4009,
+  "frases": 506,
+  "palabras_por_frase": 7.9,
+  "silabas_por_palabra": 2.02,
+  "fernandez_huerta": 77.6,
+  "inflesz": 73.1
  }
 }

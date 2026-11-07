@@ -37,6 +37,7 @@
       <span>PlanoClaro</span>
     </a>
     <nav class="nav" aria-label="Principal">
+      <button type="button" class="nav__btn" data-ir="catalogo-directo">Planes</button>
       <button type="button" class="nav__btn" data-ir="comparar"><span>Comparar</span> <span class="nav__cuenta" id="carrito-n" aria-label="planes en el comparador">0</span></button>
       <button type="button" class="nav__btn" data-ir="ahorro">Ahorro</button>
       <button type="button" class="nav__btn" data-ir="reclamos">Reclamos</button>
@@ -71,6 +72,16 @@
               <span class="sonido__txt">Sonido: no</span>
             </button>
           </div>
+          <div class="desplegable__seccion">
+            <span class="desplegable__etq">Color de acento visual</span>
+            <div class="paleta-personalizar__botones" role="group" aria-label="Temas de color">
+              <button type="button" class="selector-color selector-color--monocromo selector-color--activo" data-selector-tema="monocromo" title="Monocromo Pro (Vidrio y tinta)" aria-label="Tema Monocromo"></button>
+              <button type="button" class="selector-color selector-color--azul" data-selector-tema="azul" title="Azul Andino (Confianza)" aria-label="Tema Azul Andino"></button>
+              <button type="button" class="selector-color selector-color--esmeralda" data-selector-tema="esmeralda" title="Esmeralda (Ahorro)" aria-label="Tema Esmeralda"></button>
+              <button type="button" class="selector-color selector-color--purpura" data-selector-tema="purpura" title="Púrpura Tech" aria-label="Tema Púrpura Tech"></button>
+              <button type="button" class="selector-color selector-color--terracota" data-selector-tema="terracota" title="Terracota Andino" aria-label="Tema Terracota Andino"></button>
+            </div>
+          </div>
         </div>
       </div>
       <button type="button" class="nav__btn nav__btn--asistente" id="abrir-asistente" aria-expanded="false" aria-controls="asistente">Asistente</button>
@@ -99,9 +110,26 @@
             <span class="servicio__flecha" data-icono="flecha" aria-hidden="true"></span>
           </button>
         </div>
+        <div class="acceso-directo-wrap" style="margin-top: 1.2rem; display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; font-size: .95rem; color: var(--tinta-2);">
+          <span>¿Buscas comparar de inmediato sin responder el cuestionario?</span>
+          <button type="button" class="enlace" data-ir="catalogo-directo" style="font-weight: 700; text-decoration: underline; color: var(--tinta);">Ver catálogo con filtros rápidos (1 paso) →</button>
+        </div>
+        <div class="paleta-personalizar" role="region" aria-label="Personaliza el color de la página">
+          <span class="paleta-personalizar__titulo">
+            <span class="paleta-personalizar__punto" aria-hidden="true"></span>
+            Personaliza el color de acento:
+          </span>
+          <div class="paleta-personalizar__botones" role="group" aria-label="Temas de color">
+            <button type="button" class="selector-color selector-color--monocromo selector-color--activo" data-selector-tema="monocromo" title="Monocromo Pro (Vidrio y tinta)" aria-label="Tema Monocromo"></button>
+            <button type="button" class="selector-color selector-color--azul" data-selector-tema="azul" title="Azul Andino (Confianza)" aria-label="Tema Azul Andino"></button>
+            <button type="button" class="selector-color selector-color--esmeralda" data-selector-tema="esmeralda" title="Esmeralda (Ahorro)" aria-label="Tema Esmeralda"></button>
+            <button type="button" class="selector-color selector-color--purpura" data-selector-tema="purpura" title="Púrpura Tech (Streaming)" aria-label="Tema Púrpura Tech"></button>
+            <button type="button" class="selector-color selector-color--terracota" data-selector-tema="terracota" title="Terracota Andino (Dinamismo)" aria-label="Tema Terracota Andino"></button>
+          </div>
+        </div>
         <p class="aviso-datos" id="aviso-datos" role="status"></p>
       </div>
-      <figure class="escena" id="escena" aria-label="Ejemplos de planes reales">
+      <figure class="escena" id="escena" aria-label="Planes vigentes del catálogo oficial">
         <noscript><p>Activa JavaScript para usar el comparador.</p></noscript>
       </figure>
     </div>
@@ -152,8 +180,53 @@
 
   <!-- RESULTADOS -->
   <section id="vista-resultados" class="vista contenedor" hidden aria-labelledby="t-resultados">
-    <h1 id="t-resultados" class="titulo-vista" tabindex="-1">Tus 3 opciones</h1>
+    <nav class="migas" id="migas-resultados" aria-label="Ruta de navegación">
+      <button type="button" class="migas__enlace" data-ir="inicio">Inicio</button>
+      <span class="migas__separador" aria-hidden="true">›</span>
+      <span id="miga-servicio">Celular</span>
+      <span class="migas__separador" aria-hidden="true">›</span>
+      <span aria-current="page">Comparador y catálogo</span>
+    </nav>
+    <div class="barra-confianza" role="note">
+      <span data-icono="ok" aria-hidden="true"></span>
+      <span><strong>Promesa sin letra chiquita:</strong> Todos los precios mostrados incluyen el 18 % de IGV por mandato legal (OSIPTEL / Indecopi). Tarifas oficiales revisadas al 20/10/2026.</span>
+    </div>
+    <h1 id="t-resultados" class="titulo-vista" tabindex="-1">Tus opciones recomendadas</h1>
     <p id="resumen-perfil" class="intro"></p>
+
+    <!-- Barra de Búsqueda y Filtros Rápidos (1 paso) -->
+    <div class="barra-filtros" id="barra-filtros" role="search">
+      <div class="barra-filtros__busqueda">
+        <label for="filtro-buscar" class="sr-only">Buscar por nombre, operador o gigas</label>
+        <input type="search" id="filtro-buscar" class="barra-filtros__input" placeholder="🔍 Buscar por operador, plan o gigas (ej. Claro 30 GB, Entel, Win, WOW)...">
+      </div>
+      <div class="barra-filtros__grupos">
+        <div class="filtro-chip-grupo" id="grupo-operadores" role="group" aria-label="Filtrar por empresa">
+          <span class="filtro-chip-etq">Empresa:</span>
+          <!-- chips dinámicos inyectados por vista-resultados.js -->
+        </div>
+        <div class="filtro-chip-grupo" id="grupo-precios" role="group" aria-label="Filtrar por presupuesto">
+          <span class="filtro-chip-etq">Presupuesto:</span>
+          <button type="button" class="filtro-chip filtro-chip--activo" data-precio-max="0" aria-pressed="true">Todos</button>
+          <button type="button" class="filtro-chip" data-precio-max="35" aria-pressed="false">Hasta S/ 35</button>
+          <button type="button" class="filtro-chip" data-precio-max="65" aria-pressed="false">Hasta S/ 65</button>
+          <button type="button" class="filtro-chip" data-precio-max="999" aria-pressed="false">Más de S/ 65</button>
+        </div>
+      </div>
+      <div class="barra-filtros__meta">
+        <span id="filtro-contador" role="status" aria-live="polite">Mostrando planes disponibles</span>
+        <label>
+          <span style="font-weight:600">Ordenar por: </span>
+          <select id="filtro-orden" class="orden-select" aria-label="Criterio de ordenamiento de planes">
+            <option value="recomendados">Mejor recomendados</option>
+            <option value="precio-asc">Menor precio primero (S/ ↑)</option>
+            <option value="precio-desc">Mayor precio primero (S/ ↓)</option>
+            <option value="gigas-desc">Más gigas / velocidad (↓)</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
     <div id="resultados" class="resultados"></div>
     <section class="panel letra-chica" aria-labelledby="t-letra">
       <h2 id="t-letra">Letra pequeña, aclarada</h2>
@@ -190,6 +263,13 @@
 
   <!-- MEDIDOR -->
   <section id="vista-medidor" class="vista contenedor" hidden aria-labelledby="t-medidor">
+    <div class="banner-modulo-visual">
+      <div class="banner-modulo-visual__txt">
+        <h3>Medición Real de Gigas sin Suposiciones</h3>
+        <p>Tu propio dispositivo Android o iPhone registra el consumo exacto de los últimos 30 días para recomendarte un plan a tu medida.</p>
+      </div>
+      <div class="banner-modulo-visual__grafico" aria-hidden="true">📊</div>
+    </div>
     <h1 id="t-medidor" class="titulo-vista" tabindex="-1">Mide cuántos GB usas de verdad</h1>
     <p class="intro">Tu celular ya lo sabe. Sigue los pasos, anota el número del último mes y lo usamos para recomendarte.</p>
     <div id="medidor"></div>
@@ -197,6 +277,13 @@
 
   <!-- CALCULADORA DE AHORRO -->
   <section id="vista-ahorro" class="vista contenedor" hidden aria-labelledby="t-ahorro">
+    <div class="banner-modulo-visual">
+      <div class="banner-modulo-visual__txt">
+        <h3>Proyección de Ahorro y Detección de Cobros Ocultos</h3>
+        <p>Compara tu recibo actual con las tarifas reguladas de PlanoClaro. Identificamos cobros indebidos de routers, seguros o tarifas infladas.</p>
+      </div>
+      <div class="banner-modulo-visual__grafico" aria-hidden="true">💡</div>
+    </div>
     <h1 id="t-ahorro" class="titulo-vista" tabindex="-1">Calculadora de ahorro real</h1>
     <p class="intro">Compara lo que pagas en tu recibo mensual frente a las tarifas de PlanoClaro. Detecta cargos indebidos de routers o seguros y proyecta tu ahorro a 12 meses.</p>
     <div id="ahorro"></div>
@@ -204,6 +291,13 @@
 
   <!-- GENERADOR DE RECLAMOS OSIPTEL -->
   <section id="vista-reclamos" class="vista contenedor" hidden aria-labelledby="t-reclamos">
+    <div class="banner-modulo-visual">
+      <div class="banner-modulo-visual__txt">
+        <h3>Tus Derechos Respaldados por la Ley Peruana</h3>
+        <p>Genera cartas y solicitudes formales amparadas en la Ley 31207 y resoluciones de OSIPTEL para exigir el 70 % de velocidad o dar de baja en 5 días.</p>
+      </div>
+      <div class="banner-modulo-visual__grafico" aria-hidden="true">⚖️</div>
+    </div>
     <h1 id="t-reclamos" class="titulo-vista" tabindex="-1">Reclamos y solicitudes OSIPTEL</h1>
     <p class="intro">Genera solicitudes formales con la base legal peruana (Ley 31207 y TUO de OSIPTEL) para pedir la baja en 5 días hábiles o reclamar si no te garantizan el 70 % de velocidad.</p>
     <div id="reclamos"></div>

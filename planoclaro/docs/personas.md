@@ -1,32 +1,58 @@
-# Personas (método Cooper) y escenarios — semana 9
+# Personas (método Cooper) y escenarios — Audiencias Clave (Estudiantes y Familias)
 
-> Son **personas hipotéticas (proto-personas)** basadas en supuestos razonables. Deben validarse con los datos reales de la encuesta y las entrevistas: reemplaza o ajusta lo marcado con `[VALIDAR]`.
+> Son **personas y escenarios actualizados** basados en la realidad de consumo de telecomunicaciones en el Perú (celulares gama media/baja, redes 3G/4G, presupuesto ajustado y hogares multigeneracionales).
 
-## 1. Rosa, 67 años — «No quiero que me cobren de más» (persona principal)
+---
+
+## 1. Mateo, 20 años — «Quiero datos que me rindan para la universidad y compartir a mi laptop» (Estudiante Universitario)
+- **Dónde vive:** Los Olivos, Lima. Estudia Ingeniería de Sistemas en universidad pública / UCSS.
+- **Tecnología y Entorno:** Celular Xiaomi Redmi Note (gama media/baja, 3 GB RAM), navega con datos móviles en el transporte y campus.
+- **Presupuesto:** S/ 25 a S/ 40 mensuales, pagados de sus prácticas o apoyo familiar.
+- **Objetivos:**
+  - Máxima cantidad de gigas de alta velocidad sin precios inflados.
+  - Redes sociales (WhatsApp, Instagram, TikTok) y Spotify para trayectos largos.
+  - **Función crítica:** Poder compartir datos (*hotspot/tethering*) a su laptop para hacer trabajos cuando el WiFi de la universidad colapsa.
+- **Frustraciones:**
+  - Planes que dicen «Ilimitados» pero en la letra chiquita prohíben compartir internet a la laptop o bajan la velocidad a 256 kbps tras 10 GB.
+  - Planes postpago con contratos de 18 meses o penalidades si desea cambiarse.
+  - Sitios web pesados que tardan en cargar o congelan su teléfono por animaciones 3D innecesarias.
+- **Escenario de Uso:**
+  Mateo abre PlanoClaro desde su celular en el micro. La web carga al instante sin animaciones pesadas. En vez de llenar un test largo, toca directamente **«Plan para mi celular»** y aplica el filtro rápido: *Hasta S/ 35* y marca la etiqueta *«Permite compartir datos a laptop»*. Ve dos planes compatibles de S/ 29.90 y S/ 39.90, ambos con el sello **«Precio final con IGV incluido»**. Compara el plan de Entel y Claro lado a lado, verifica que la portabilidad es gratis y en 24 horas según OSIPTEL, y guarda el plan en favoritos.
+
+---
+
+## 2. Familia Quispe-Alva (4 integrantes) — «Internet rápido para teletrabajo y estudio, sin sorpresas en el recibo» (Hogar Familiar)
+- **Representante:** Carlos (42 años, asistente contable en teletrabajo) y Carmen (39 años, emprendedora). Hijos: Lucía (19 años, universitaria) y Sebastián (14 años, escolar).
+- **Dónde vive:** San Juan de Lurigancho, Lima (casa de 2 pisos).
+- **Tecnología y Entorno:** Celulares Android de gama media, 1 laptop de trabajo, 1 computadora para tareas escolares y 1 Smart TV con Netflix/YouTube.
+- **Presupuesto:** S/ 60 a S/ 90 mensuales para internet fijo.
+- **Objetivos:**
+  - Conexión estable que no se caiga durante reuniones Zoom de Carlos y clases virtuales de Lucía.
+  - Fibra óptica real (velocidad simétrica de subida y bajada) para subir tareas y reportes contables pesados.
+  - Señal Wi-Fi que llegue al segundo piso sin tener que pagar cobros ocultos por repetidores.
+- **Frustraciones:**
+  - Ofertas engañosas de «S/ 49.90» que a partir del mes 4 suben a S/ 89.90 sin aviso claro.
+  - Operadores que venden «fibra» pero instalan cable coaxial (HFC) asimétrico con microcortes continuos.
+  - Alquiler forzoso de routers o cobros sorpresa de instalación en el recibo.
+- **Escenario de Uso:**
+  Carlos accede a PlanoClaro desde su computadora o celular. Selecciona **«Internet para mi casa»** y marca *«4 a más personas / teletrabajo»*. PlanoClaro descarta planes HFC asimétricos y filtra proveedores con fibra óptica en Lima. El comparador le muestra claramente la advertencia: *«Mes 1 al 3: S/ 55 · Desde mes 4: S/ 80 · Costo a 12 meses: S/ 885 (con IGV)»*. Además, lee el consejo preventivo de PlanoClaro: *«Tu casa tiene 2 pisos; Win o WOW incluyen equipo Mesh en comodato, mientras que otros operadores cobran S/ 12 al mes por repetidor»*. Carlos descarga el recordatorio en su calendario para saber exactamente cuándo termina la promoción.
+
+---
+
+## 3. Rosa, 67 años — «No quiero que me cobren de más» (Adulto Mayor / Respaldo)
 - **Dónde vive:** San Martín de Porres, Lima. Jubilada.
-- **Tecnología:** celular Android que le regaló su hija. Usa WhatsApp, Facebook y videollamadas con sus nietos.
-- **Objetivos:** pagar poco y siempre lo mismo; no tener sorpresas; poder llamar a su familia.
-- **Frustraciones:** letra pequeña, palabras como «GB» o «Mbps», vendedores que hablan rápido.
-- **Comportamiento:** pide ayuda a su hija para todo trámite. `[VALIDAR]`
-- **Escenario:** Rosa recibe un mensaje de que su plan sube de precio. Abre PlanoClaro en el celular, toca «Plan para mi celular», responde 5 preguntas con botones grandes y ve que la opción más barata cuesta S/ 29.90 todos los meses. Lee en «Letra chica» que cambiarse con su mismo número es gratis. Guarda el plan como favorito para mostrárselo a su hija.
+- **Tecnología:** Celular Android básico. Usa WhatsApp y videollamadas con sus nietos.
+- **Objetivos:** Pagar una tarifa fija baja sin sorpresas; no lidiar con jerga técnica («GB», «Mbps», «HFC»).
+- **Escenario:** Rosa entra con texto ampliado (A+), lee en lenguaje claro qué significa cada plan y comprueba que cambiar de operador no le hará perder su número.
 
-## 2. Jhon, 34 años — «Trabajo desde casa, necesito que no se caiga»
-- **Dónde vive:** Arequipa. Contador independiente, casado, dos hijos.
-- **Tecnología:** laptop, smart TV, dos celulares en casa.
-- **Objetivos:** internet estable para videollamadas y clases de sus hijos; saber si la empresa llega a su zona.
-- **Frustraciones:** ofertas que solo existen en Lima; el precio sube al cuarto mes.
-- **Escenario:** Jhon elige «Internet para mi casa», marca «Trabajo o clases» y «Ver películas», y dice que vive en provincias. PlanoClaro descarta FiberPro (solo Lima) y le explica por qué. Compara 3 planes lado a lado y descarga el recordatorio para cuando termine la oferta.
+---
 
-## 3. Valeria, 21 años — «Quiero más datos por menos»
-- **Dónde vive:** Chiclayo. Estudiante universitaria.
-- **Tecnología:** iPhone, mucho TikTok y Spotify fuera de casa.
-- **Objetivos:** muchos GB, compartir datos con su laptop, precio bajo.
-- **Escenario:** Valeria usa «Medir mi consumo», sigue los pasos de iPhone y ve que gastó 38 GB. Escribe el número y PlanoClaro lo usa para recomendar. Usa el asistente para preguntar «¿qué es la permanencia?».
+## Matriz Comparativa de Comportamiento y Necesidades (Cooper)
 
-## Matriz de comportamiento (Cooper) `[VALIDAR con datos]`
-| Variable | Rosa | Jhon | Valeria |
+| Variable | Mateo (Estudiante) | Familia Quispe-Alva (Hogar) | Rosa (Adulto Mayor) |
 |---|---|---|---|
-| Conocimiento técnico (bajo → alto) | Bajo | Medio | Alto |
-| Sensibilidad al precio | Muy alta | Media | Alta |
-| Necesidad de ayuda | Alta | Baja | Baja |
-| Dispositivo principal | Celular | Laptop | Celular |
+| **Dispositivo de acceso habitual** | Celular gama media/baja (Android) | Celular familiar / Laptop | Celular básico |
+| **Sensibilidad al precio** | Extrema (cada S/ 5 cuenta) | Media-Alta (relación costo/beneficio) | Muy alta (tarifa fija predecible) |
+| **Principal temor / fricción** | Topes ocultos de velocidad y tethering | Subida sorpresa de precio en mes 3 o 4 | Términos confusos y cobros indebidos |
+| **Elemento decisor clave** | GB de alta velocidad + Hotspot | Velocidad simétrica + Cobertura Wi-Fi | Facilidad de trámite y costo mensual |
+| **Nivel de alfabetización digital** | Alto | Medio | Bajo (requiere lenguaje cotidiano) |

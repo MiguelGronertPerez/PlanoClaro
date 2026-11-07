@@ -1,8 +1,7 @@
 // Endpoint Serverless Vercel para el Asistente con Google Gemini AI
-// Protege y oculta la clave de API en el servidor, sin exponerla en el navegador del cliente.
+// Gestiona memoria conversacional, RAG con el catálogo de PlanoClaro y evita truncado de tokens.
 
 export default async function handler(req, res) {
-  // Configuración CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -18,57 +17,71 @@ export default async function handler(req, res) {
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
     const pregunta = String(body.pregunta || '').trim().slice(0, 400);
+    const historial = Array.isArray(body.historial) ? body.historial : [];
     const catalogo = Array.isArray(body.catalogo) ? body.catalogo : [];
 
     if (!pregunta) {
       return res.status(400).json({ error: 'Pregunta requerida' });
     }
 
-    // La clave se lee de las variables de entorno seguras de Vercel (o fallback cifrado del servidor)
     const key = process.env.GEMINI_API_KEY || Buffer.from('QVEuQWI4Uk42STZ5MmNHY1FfTzhpVjA1UzB6dG5IcFFZS2hiN05ieXJVN3NFaEFfSG9ma2c=', 'base64').toString('utf8');
 
-    // Resumen conciso del catálogo para contextualizar a Gemini (RAG)
+    // Resumen del catálogo oficial para contextualizar
     const resumenCat = catalogo.length
       ? catalogo.map(p =>
-          `- ${p.operador} ${p.nombre} (${p.tipo}): regular S/ ${p.precioRegular}/mes${p.precioPromo ? ` (promo S/ ${p.precioPromo} x ${p.mesesPromo}m)` : ''}, ` +
+          `- ${p.operador} ${p.nombre} (${p.tipo}): S/ ${p.precioRegular}/mes${p.precioPromo ? ` (promo S/ ${p.precioPromo} x ${p.mesesPromo}m)` : ''}, ` +
           (p.tipo === 'movil' ? `${p.gbAltaVelocidad} GB` : `${p.velocidadMbps} Mbps`)
         ).join('\n')
       : '';
 
-    const promptSistema = `Eres el Asistente Inteligente oficial de PlanoClaro (comparador ciudadano de planes de telecomunicaciones en Perú, desarrollado por Miguel Armando Gronert Perez en la Universidad Católica Sedes Sapientiae - UCSS).
-Tu objetivo es responder con total naturalidad, amabilidad, claridad y precisión técnica a cualquier consulta sobre telefonía móvil e internet en el Perú.
-Instrucciones:
-1. Responde de manera concisa y bien estructurada (máximo 3 párrafos cortos o viñetas claras).
-2. Usa lenguaje claro peruano y siempre menciona precios reales en soles (S/) con IGV incluido.
-3. Catálogo oficial de planes vigente en PlanoClaro:
+    const promptSistema = `Eres el Asistente Inteligente oficial de PlanoClaro (comparador de telecomunicaciones en Perú, creado por Miguel Armando Gronert Perez en UCSS).
+Tu objetivo es responder con total naturalidad, calidez humana, claridad y precisión técnica a cualquier consulta sobre celular e internet hogar en el Perú.
+Directrices:
+1. Responde de forma completa pero concisa (2 a 4 párrafos cortos o viñetas claras). No cortes la respuesta a medias.
+2. Habla en español peruano natural y amigable (ej. "¡Hola!", "Sí te alcanza", "Tienes estas opciones").
+3. Precios siempre en soles (S/) con IGV incluido.
+4. Catálogo oficial de planes de PlanoClaro:
 ${resumenCat}
-4. Normas clave de OSIPTEL que debes conocer y citar cuando corresponda:
-   - Portabilidad numérica móvil en 24 horas (gratuita).
-   - Cancelación / baja de servicio en máximo 5 días hábiles.
-   - Prohibido cortar servicios por falta de pago los viernes por la tarde, sábados, domingos o feriados.
-   - Velocidad mínima garantizada del 70 % (Ley 31207).
-   - Permanencia o contratos forzosos son ilegales si no se adquirió un equipo con descuento.
-5. Si preguntan por un presupuesto (ej. 40 soles), lista las mejores opciones reales del catálogo que se ajusten.`;
+5. Normas OSIPTEL clave: portabilidad móvil en 24h gratis, baja en 5 días hábiles, prohibido cortar servicios por falta de pago fines de semana o feriados, velocidad mínima garantizada 70% (Ley 31207), contratos forzosos ilegales si no se compró equipo con descuento.
+6. Si preguntan por presupuestos (ej. "tengo 50 soles", "planes de 40"), da los planes reales exactos y compáralos con honestidad.`;
+
+    // Estructurar historial conversacional para que entienda preguntas de seguimiento ("cuales me recomiendas", "y para casa?")
+    const contents = [];
+    if (historial.length) {
+      historial.slice(-6).forEach(h => {
+        if (!h.texto) return;
+        contents.push({
+          role: h.quien === 'yo' ? 'user' : 'model',
+          parts: [{ text: String(h.texto).slice(0, 300) }]
+        });
+      });
+    }
+    // Agregar la pregunta actual del usuario
+    contents.push({
+      role: 'user',
+      parts: [{ text: pregunta }]
+    });
 
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${encodeURIComponent(key)}`;
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 9000);
+    const timeout = setTimeout(() => controller.abort(), 9500);
 
     const apiRes = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       signal: controller.signal,
       body: JSON.stringify({
-        contents: [
-          {
-            role: 'user',
-            parts: [{ text: `${promptSistema}\n\nPregunta del usuario: ${pregunta}` }]
-          }
-        ],
+        systemInstruction: {
+          parts: [{ text: promptSistema }]
+        },
+        contents: contents,
         generationConfig: {
-          temperature: 0.25,
-          maxOutputTokens: 500
+          temperature: 0.3,
+          maxOutputTokens: 1024,
+          thinkingConfig: {
+            thinkingBudget: 0
+          }
         }
       })
     });
@@ -80,17 +93,17 @@ ${resumenCat}
     }
 
     const data = await apiRes.json();
-    const textoRespuesta = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const textoRespuesta = data?.candidates?.[0]?.content?.parts?.map(p => p.text).join('') || '';
     const parrafos = textoRespuesta.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
 
-    // Detección automática de botones de comparación según los planes mencionados
+    // Botones de acción dinámicos para comparar los planes sugeridos
     const botones = [];
-    if (catalogo.length) {
-      const textoBuscador = textoRespuesta.toLowerCase();
+    if (catalogo.length && textoRespuesta) {
+      const txtMin = textoRespuesta.toLowerCase();
       catalogo.forEach(p => {
-        const nomBuscado = p.nombre.toLowerCase();
-        const opBuscado = p.operador.toLowerCase();
-        if (textoBuscador.includes(nomBuscado) || (textoBuscador.includes(opBuscado) && textoBuscador.includes(String(Math.floor(p.precioRegular))))) {
+        const nomMin = p.nombre.toLowerCase();
+        const opMin = p.operador.toLowerCase();
+        if (txtMin.includes(nomMin) || (txtMin.includes(opMin) && txtMin.includes(String(Math.floor(p.precioRegular))))) {
           if (!botones.some(b => b.idPlan === p.id) && botones.length < 3) {
             botones.push({
               texto: `Comparar ${p.operador} ${p.nombre}`,

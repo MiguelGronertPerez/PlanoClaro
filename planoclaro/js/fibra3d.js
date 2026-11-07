@@ -8,7 +8,17 @@ PC.fibra3d = {
   iniciar() {
     const lienzo = document.getElementById('fibra');
     const T = window.THREE;
-    if (!lienzo || !T) { if (lienzo) lienzo.hidden = true; return; }
+    // Entorno tecnológico peruano: celulares gama media/baja o pantallas pequeñas (< 768px)
+    // omiten Three.js para garantizar carga ultraligera, 60 fps y cero consumo innecesario de batería/CPU.
+    const esDispositivoBajoRecurso = (
+      window.innerWidth < 768 ||
+      (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+      (navigator.deviceMemory && navigator.deviceMemory <= 4)
+    );
+    if (!lienzo || !T || esDispositivoBajoRecurso) {
+      if (lienzo) lienzo.hidden = true;
+      return;
+    }
     let rend;
     try { rend = new T.WebGLRenderer({ canvas: lienzo, antialias: true, alpha: true, powerPreference: 'low-power' }); }
     catch (e) { lienzo.hidden = true; return; }
